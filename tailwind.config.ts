@@ -48,7 +48,7 @@ const config = {
           foreground: "hsl(var(--white))",
         },
         grey: {
-          Default: "hsl(var(--grey))",
+          DEFAULT: "hsl(var(--grey))",
           dark: "hsl(var(--dark-grey))",
           light: "hsl(var(--light-grey))",
         },

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Instrument_Sans as FontSans } from "next/font/google";
 import "./globals.css";
+import { Tabs } from "@/components/ui/tabs";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -16,7 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={fontSans.className}>{children}</body>
+      <body className={` bg-grey-light ${fontSans.className}`}>
+        <Tabs defaultValue="link">{children}</Tabs>
+        <Toaster />
+      </body>
     </html>
   );
 }
