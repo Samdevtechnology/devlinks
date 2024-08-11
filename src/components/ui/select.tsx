@@ -9,18 +9,23 @@ import { cn } from "@/lib/utils";
 interface SelectProps
   extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root> {
   children: React.ReactNode;
+  errorMsg?: string;
 }
 
-const Select: React.FC<SelectProps> = ({ children, ...props }) => {
+const Select: React.FC<SelectProps> = ({ children, errorMsg, ...props }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <SelectPrimitive.Root {...props} onOpenChange={setOpen}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child as React.ReactElement<{ open: boolean }>, {
-              open,
-            })
+          ? React.cloneElement(
+              child as React.ReactElement<{ open: boolean; errorMsg: string }>,
+              {
+                open,
+                errorMsg,
+              }
+            )
           : child
       )}
     </SelectPrimitive.Root>
@@ -34,17 +39,20 @@ const SelectValue = SelectPrimitive.Value;
 interface SelectTriggerProps
   extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> {
   open?: boolean;
+  errorMsg?: string;
 }
 
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   SelectTriggerProps
->(({ className, children, open, ...props }, ref) => {
+>(({ className, children, open, errorMsg, ...props }, ref) => {
   return (
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-lg border bg-white px-3 py-2 text-sm placeholder:opacity-50 focus:outline-0 focus:shadow focus-within:shadow data-[state=open]:shadow data-[state=open]:border-primary hover:shadow focus:border-primary hover:border-primary  disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        errorMsg &&
+          `border-destructive text-destructive hover:border-destructive hover:shadow-error focus:shadow-error focus-within:shadow-error data-[state=open]:shadow-error data-[state=open]:border-destructive focus:border-destructive`,
         className
       )}
       {...props}
@@ -52,7 +60,12 @@ const SelectTrigger = React.forwardRef<
       {children}
       <SelectPrimitive.Icon asChild>
         <div className={` transition ${open ? "rotate-180" : ""}`}>
-          <ChevronDown className="h-4 w-4 text-primary" />
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 text-primary",
+              errorMsg && "text-destructive"
+            )}
+          />
         </div>
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
