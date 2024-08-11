@@ -6,6 +6,8 @@ import AddLinkForm from "@/components/forms/Link";
 import { useLinkStore } from "@/stores/linkStore";
 import { Button } from "@/components/ui/button";
 import Emptylist from "./components/Emptylist";
+import { toast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 const LinkForm = () => {
   const { links, addLink, removeLink, getAvailableLinkTypes } = useLinkStore();
@@ -25,14 +27,22 @@ const LinkForm = () => {
   }, [links]);
 
   const handleAddForm = async () => {
-    const validations = await Promise.all(
-      formIds.map((id) => formRefs.current[id]?.current?.validate())
-    );
+    const allSaved = await handleSave();
+    const availableLinkTypes = getAvailableLinkTypes();
 
-    if (validations.every((isValid) => isValid)) {
+    if (!availableLinkTypes.length) {
+      return toast({
+        variant: "destructive",
+        title: "No available Platform",
+        description: "There are no More available platforms",
+        action: <ToastAction altText="Try again">Close</ToastAction>,
+      });
+    }
+
+    if (allSaved) {
       const newFormId = Date.now().toString();
       formRefs.current[newFormId] = React.createRef();
-      setFormIds((prevFormIds) => [...prevFormIds, newFormId]);
+      setFormIds((prevFormIds) => [newFormId, ...prevFormIds]);
     }
   };
 
@@ -50,15 +60,15 @@ const LinkForm = () => {
     if (validations.every((isValid) => isValid)) {
       formIds.forEach((id) => {
         const link = formRefs.current[id]?.current?.getValues();
+
         if (link) {
           addLink(link);
         }
       });
-      console.log("Submitted all");
+      return true;
     }
+    return false;
   };
-
-  const availableLinkTypes = getAvailableLinkTypes();
 
   return (
     <Container className="h-[90%]">
@@ -88,7 +98,7 @@ const LinkForm = () => {
               <div key={formId} className="mb-4">
                 <AddLinkForm
                   formId={formId}
-                  formIndex={index}
+                  formIndex={formIds.length - 1 - index}
                   onRemove={() => handleRemoveForm(formId)}
                   defaultValues={links.find((link) => link.id === formId)}
                   ref={formRefs.current[formId]}

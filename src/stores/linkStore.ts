@@ -31,7 +31,7 @@ export const useLinkStore = create<LinkState>()(
         const existingLink = get().links.find((l) => l.type === link.type);
         if (!existingLink) {
           set((state) => ({
-            links: [...state.links, link],
+            links: [link, ...state.links],
             usedLinkTypes: [...state.usedLinkTypes, link.type],
           }));
         }

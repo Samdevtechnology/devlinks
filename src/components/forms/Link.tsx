@@ -1,19 +1,11 @@
 "use client";
 
-import React, { forwardRef, useImperativeHandle, useEffect } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { linkSchema, Link } from "./schemas/linkSchema";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { LinkType } from "@/lib/linkTypes";
+import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useLinkStore } from "@/stores/linkStore";
 import {
   Select,
@@ -39,24 +31,27 @@ const AddLinkForm = forwardRef<FormRef, AddLinkFormProps>(
   ({ formId, onRemove, defaultValues, formIndex }, ref) => {
     const form = useForm<Link>({
       resolver: zodResolver(linkSchema),
-      defaultValues: defaultValues || { type: LinkType.GITHUB, url: "" },
+      defaultValues: defaultValues || { url: "" },
     });
     const { getAvailableLinkTypes } = useLinkStore();
     const availableLinkTypes = getAvailableLinkTypes();
 
-    const { control, trigger, getValues, setValue } = form;
+    const { control, trigger, getValues, watch } = form;
+
+    // Watch the "type" and "url" fields and validate on change
+    useEffect(() => {
+      const subscription = watch((value, { name }) => {
+        if (name) {
+          trigger(name);
+        }
+      });
+      return () => subscription.unsubscribe();
+    }, [watch, trigger]);
 
     useImperativeHandle(ref, () => ({
       validate: () => trigger(),
       getValues: () => ({ ...getValues(), id: formId }),
     }));
-
-    useEffect(() => {
-      if (defaultValues) {
-        setValue("type", defaultValues.type);
-        setValue("url", defaultValues.url);
-      }
-    }, [defaultValues, setValue]);
 
     return (
       <FormProvider {...form}>
@@ -84,11 +79,20 @@ const AddLinkForm = forwardRef<FormRef, AddLinkFormProps>(
                   Platform
                 </FormLabel>
                 <FormControl>
-                  <Select>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    errorMsg={form.formState.errors.type?.message}
+                  >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Please Select a Platform" />
                     </SelectTrigger>
                     <SelectContent>
+                      {defaultValues?.type && (
+                        <SelectItem key={field.value} value={field.value}>
+                          {field.value}
+                        </SelectItem>
+                      )}
                       {availableLinkTypes.map((type) => (
                         <SelectItem key={type} value={type}>
                           {type}
@@ -97,7 +101,6 @@ const AddLinkForm = forwardRef<FormRef, AddLinkFormProps>(
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
