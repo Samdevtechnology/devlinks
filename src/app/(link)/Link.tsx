@@ -90,7 +90,7 @@ const LinkForm = () => {
             + Add new link
           </Button>
         </div>
-        <div className="w-full p-6">
+        <div className="w-full px-6">
           {formIds.length === 0 ? (
             <Emptylist />
           ) : (

@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Link as LinkIcon } from "../icons/Icons";
 
 interface AddLinkFormProps {
   formId: string;
@@ -89,12 +90,16 @@ const AddLinkForm = forwardRef<FormRef, AddLinkFormProps>(
                     </SelectTrigger>
                     <SelectContent>
                       {defaultValues?.type && (
-                        <SelectItem key={field.value} value={field.value}>
-                          {field.value}
+                        <SelectItem
+                          key={field.value}
+                          icon={field.value}
+                          value={field.value}
+                        >
+                          <div className="flex gap-3">{field.value}</div>
                         </SelectItem>
                       )}
                       {availableLinkTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
+                        <SelectItem key={type} icon={type} value={type}>
                           {type}
                         </SelectItem>
                       ))}
@@ -115,6 +120,7 @@ const AddLinkForm = forwardRef<FormRef, AddLinkFormProps>(
                 </FormLabel>
                 <FormControl>
                   <Input
+                    Icon={LinkIcon}
                     errorMsg={form.formState.errors.url?.message}
                     placeholder="Enter URL"
                     {...field}
