@@ -16,6 +16,7 @@ interface LinkState {
   usedLinkTypes: LinkType[];
   addLink: (link: Link) => void;
   removeLink: (id: string) => void;
+  updateLinks: (links: Link[]) => void;
   getAvailableLinkTypes: () => LinkType[];
   fetchLinksFromFirestore: () => Promise<void>;
   saveLinksToFirestore: () => Promise<void>;
@@ -47,6 +48,13 @@ export const useLinkStore = create<LinkState>()(
         }));
       },
 
+      updateLinks: (links) => {
+        set({
+          links: links,
+          usedLinkTypes: links.map((link) => link.type),
+        });
+      },
+
       getAvailableLinkTypes: () => {
         const allLinkTypes = Object.values(LinkType);
         const usedLinkTypes = get().usedLinkTypes;
@@ -68,7 +76,7 @@ export const useLinkStore = create<LinkState>()(
 
       saveLinksToFirestore: async () => {
         const links = get().links;
-        const batch = writeBatch(db); // Corrected to use writeBatch
+        const batch = writeBatch(db);
 
         links.forEach((link) => {
           const linkRef = doc(db, "links", link.id);

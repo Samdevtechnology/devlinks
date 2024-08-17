@@ -7,9 +7,10 @@ import Image from "next/image";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const PreviewFrame = () => {
-  const { links } = useLinkStore();
+  const { links, updateLinks } = useLinkStore();
   const { user } = useUserStore();
 
   const profilePic = user?.photoURL;
@@ -19,6 +20,17 @@ const PreviewFrame = () => {
       : undefined;
 
   const profileName = user?.useNickname ? user?.nickname : fullName;
+
+  const handleOnDragEnd = (result: any) => {
+    if (!result.destination) return;
+
+    const items = Array.from(links);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    updateLinks(items);
+  };
+
   return (
     <div className="w-full h-fit bg-white rounded-xl ml-8 lg:ml-12 mt-6 sticky top-0">
       <div className="w-full flex justify-center items-center py-6 ">
@@ -55,28 +67,48 @@ const PreviewFrame = () => {
                 </p>
               </div>
               <div className="link mt-8 max-h-[264px] w-full overflow-y-auto no-scrollbar">
-                <ul>
-                  {Array.from({ length: Math.max(links.length, 4) }).map(
-                    (_, index) => {
-                      const link = links[index];
-                      if (link) {
-                        return (
-                          <li key={link.id}>
-                            <BrandedLinks name={link.type} />
-                          </li>
-                        );
-                      } else {
-                        return (
-                          <Skeleton
-                            className="mb-2 w-full"
-                            height={40}
-                            key={`skeleton-${index}`}
-                          />
-                        );
-                      }
-                    }
-                  )}
-                </ul>
+                <DragDropContext onDragEnd={handleOnDragEnd}>
+                  <Droppable droppableId="links">
+                    {(provided) => (
+                      <ul {...provided.droppableProps} ref={provided.innerRef}>
+                        {Array.from({ length: Math.max(links.length, 4) }).map(
+                          (item, index) => {
+                            const link = links[index];
+                            if (link) {
+                              return (
+                                <Draggable
+                                  key={link.id}
+                                  draggableId={link.id}
+                                  index={index}
+                                >
+                                  {(provided) => (
+                                    <li
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                    >
+                                      <BrandedLinks name={link.type} />
+                                    </li>
+                                  )}
+                                </Draggable>
+                              );
+                            } else {
+                              return (
+                                <li key={`skeleton-${index}`}>
+                                  <Skeleton
+                                    className="mb-2 w-full"
+                                    height={40}
+                                  />
+                                </li>
+                              );
+                            }
+                          }
+                        )}
+                        {provided.placeholder}
+                      </ul>
+                    )}
+                  </Droppable>
+                </DragDropContext>
               </div>
             </div>
           </div>
