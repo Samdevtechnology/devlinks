@@ -15,16 +15,26 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import ImageUpload from "../ui/imageUpload";
 import React from "react";
+import { Toggle } from "../ui/toggle";
+import useUserStore from "@/stores/userStore";
+import { ToggleLeft, ToggleRight } from "lucide-react";
 
 const profileSchema = z.object({
-  image: z
-    .union([z.instanceof(File), z.null()])
-    .refine((file) => file === null || file.type.startsWith("image/"), {
+  image: z.union([z.instanceof(File), z.null(), z.string().url()]).refine(
+    (file) => {
+      if (file === null) return true;
+      if (typeof file === "string") return true; // URL string
+      return file.type.startsWith("image/");
+    },
+    {
       message: "Must be an image file",
-    }),
-  firstName: z.string().min(1, "Can’t be empty"),
-  lastName: z.string().min(1, "Can’t be empty"),
+    }
+  ),
+  firstName: z.string().min(1, "Can’t be empty").optional(),
+  lastName: z.string().min(1, "Can’t be empty").optional(),
+  nickname: z.string().optional(),
   email: z.string().min(1, "Can’t be empty").email(),
+  useNickname: z.boolean().default(false),
 });
 
 interface profileFormProps {
@@ -33,19 +43,40 @@ interface profileFormProps {
 
 const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
   (props, ref) => {
+    const { user, updateUser } = useUserStore();
+    const emptyUser = {
+      image: null,
+      firstName: "",
+      lastName: "",
+      email: "",
+      nickname: "",
+      useNickname: false,
+    };
+
+    const transformedUser = user
+      ? {
+          email: user.email || "",
+          image: user.photoURL || null,
+          firstName: user.firstName || "",
+          lastName: user.lastName || "",
+          nickname: user.nickname || "",
+          useNickname: user.useNickname ?? false,
+        }
+      : emptyUser;
+
     const formRef = React.useRef<HTMLFormElement | null>(null);
     const form = useForm<z.infer<typeof profileSchema>>({
       resolver: zodResolver(profileSchema),
-      defaultValues: {
-        image: null,
-        firstName: "",
-        lastName: "",
-        email: "",
-      },
+      defaultValues: transformedUser,
     });
 
     const handleSubmit = (values: z.infer<typeof profileSchema>) => {
-      console.log(values);
+      console.log("submitted", values);
+      const updatedUser = {
+        ...values,
+        uid: user?.uid || "",
+      };
+      useUserStore.setState({ user: updatedUser });
     };
 
     React.useImperativeHandle(ref, () => ({
@@ -85,44 +116,111 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
           />
 
           <div className="bg-grey-light rounded-xl p-5 flex flex-col gap-3">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <span className="w-full">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>First name*</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ben"
+                            type="text"
+                            {...field}
+                            errorMsg={form.formState.errors.firstName?.message}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              updateUser({ firstName: e.target.value });
+                            }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
+                />
+              </span>
+              <span className="w-full">
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Last name*</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Wright"
+                            type="text"
+                            {...field}
+                            errorMsg={form.formState.errors.lastName?.message}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              updateUser({ lastName: e.target.value });
+                            }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
+                />
+              </span>
+            </div>
+
             <FormField
               control={form.control}
-              name="firstName"
+              name="nickname"
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel>First name*</FormLabel>
+                    <div className="flex justify-between items-center">
+                      <FormLabel>Nickname (optional)</FormLabel>
+                      <div>
+                        <FormField
+                          control={form.control}
+                          name="useNickname"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Toggle
+                                  size="sm"
+                                  pressed={field.value}
+                                  onPressedChange={(value) => {
+                                    field.onChange(value);
+                                    updateUser({ useNickname: value });
+                                  }}
+                                >
+                                  {field.value ? (
+                                    <ToggleRight />
+                                  ) : (
+                                    <ToggleLeft />
+                                  )}
+                                </Toggle>
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
                     <FormControl>
                       <Input
-                        placeholder="Ben"
+                        placeholder="Nickname"
                         type="text"
                         {...field}
-                        errorMsg={form.formState.errors.firstName?.message}
+                        errorMsg={form.formState.errors.nickname?.message}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          updateUser({ nickname: e.target.value });
+                        }}
                       />
                     </FormControl>
                   </FormItem>
                 );
               }}
             />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>Last name*</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Wright"
-                        type="text"
-                        {...field}
-                        errorMsg={form.formState.errors.lastName?.message}
-                      />
-                    </FormControl>
-                  </FormItem>
-                );
-              }}
-            />
+
             <FormField
               control={form.control}
               name="email"
@@ -136,6 +234,10 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
                         type="email"
                         {...field}
                         errorMsg={form.formState.errors.email?.message}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          updateUser({ email: e.target.value });
+                        }}
                       />
                     </FormControl>
                   </FormItem>

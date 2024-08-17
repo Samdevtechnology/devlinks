@@ -3,6 +3,7 @@
 import React, { useState, ChangeEvent } from "react";
 import { cn } from "@/lib/utils";
 import { Image } from "@phosphor-icons/react";
+import useUserStore from "@/stores/userStore";
 
 interface ImageUploadProps {
   className?: string;
@@ -17,14 +18,15 @@ const ImageUpload = ({
   onChange,
   onBlur,
 }: ImageUploadProps) => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const { user, updateUser } = useUserStore();
+  const userImage = user?.photoURL;
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       onChange(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
+        updateUser({ photoURL: reader.result as string });
       };
       reader.readAsDataURL(file);
     } else {
@@ -48,22 +50,22 @@ const ImageUpload = ({
           className={cn(
             "text-primary rounded-xl flex justify-center items-center mt-4 py-14 px-9",
             className,
-            selectedImage ? "bg-cover bg-center text-white" : "bg-primary-light"
+            userImage ? "bg-cover bg-center text-white" : "bg-primary-light"
           )}
           style={{
-            backgroundImage: selectedImage
-              ? `linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url(${selectedImage})`
+            backgroundImage: userImage
+              ? `linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url(${userImage})`
               : "none",
-            backgroundColor: selectedImage ? "lightgray" : "",
+            backgroundColor: userImage ? "lightgray" : "",
             backgroundPosition: "center",
             backgroundSize: "cover",
           }}
         >
           <div className="flex flex-col justify-center items-center gap-2">
             <Image size={40} className="text-inherit" alt="image icon" />
-            <button className="font-semibold">
-              {!selectedImage ? "+ Upload Image" : "Change Image"}
-            </button>
+            <span className="font-semibold">
+              {!userImage ? "+ Upload Image" : "Change Image"}
+            </span>
           </div>
         </div>
       </label>
