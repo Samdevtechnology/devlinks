@@ -4,9 +4,10 @@ import Icons, { ForwardArrow } from "../icons/Icons";
 
 interface BrandedLinksProps {
   name: string;
+  className?: string;
 }
 
-const BrandedLinks = ({ name }: BrandedLinksProps) => {
+const BrandedLinks = ({ name, className }: BrandedLinksProps) => {
   const casedName = name.replace(/[ .]/g, "_");
   const Icon = Icons[casedName as keyof typeof Icons];
   const color = BgColors[casedName as keyof typeof BgColors];
@@ -15,7 +16,8 @@ const BrandedLinks = ({ name }: BrandedLinksProps) => {
     return (
       <li
         className={cn(
-          `flex justify-between items-center mb-2 w-full border border-[#D9D9D9] text-grey-dark text-xs bg-white px-4 py-3 rounded-md`
+          `flex justify-between items-center mb-2 w-full border border-[#D9D9D9] text-grey-dark text-xs bg-white px-4 py-3 rounded-md`,
+          className
         )}
       >
         <div className="flex gap-2">
@@ -31,7 +33,8 @@ const BrandedLinks = ({ name }: BrandedLinksProps) => {
   return (
     <li
       className={cn(
-        `flex justify-between items-center mb-2 w-full text-xs text-white px-4 py-3 rounded-md`
+        `flex justify-between items-center mb-2 w-full text-xs text-white px-4 py-3 rounded-md`,
+        className
       )}
       style={{ backgroundColor: color }}
     >
