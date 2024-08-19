@@ -8,7 +8,7 @@ import useUserStore from "@/stores/userStore";
 interface ImageUploadProps {
   className?: string;
   label?: string;
-  onChange: (file: File | null) => void;
+  onChange: (image: string) => void;
   onBlur: () => void;
 }
 
@@ -18,19 +18,19 @@ const ImageUpload = ({
   onChange,
   onBlur,
 }: ImageUploadProps) => {
-  const { user, updateUser } = useUserStore();
+  const { user } = useUserStore();
   const userImage = user?.photoURL;
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      onChange(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        updateUser({ photoURL: reader.result as string });
+        const base64String = reader.result as string;
+        onChange(base64String);
       };
       reader.readAsDataURL(file);
     } else {
-      onChange(null);
+      onChange("");
     }
   };
 

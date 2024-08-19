@@ -20,16 +20,7 @@ import useUserStore from "@/stores/userStore";
 import { ToggleLeft, ToggleRight } from "lucide-react";
 
 const profileSchema = z.object({
-  image: z.union([z.instanceof(File), z.null(), z.string().url()]).refine(
-    (file) => {
-      if (file === null) return true;
-      if (typeof file === "string") return true; // URL string
-      return file.type.startsWith("image/");
-    },
-    {
-      message: "Must be an image file",
-    }
-  ),
+  image: z.string().url().optional(),
   firstName: z.string().min(1, "Can’t be empty").optional(),
   lastName: z.string().min(1, "Can’t be empty").optional(),
   nickname: z.string().optional(),
@@ -43,9 +34,9 @@ interface profileFormProps {
 
 const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
   (props, ref) => {
-    const { user, updateUser } = useUserStore();
+    const { user, updateUser, saveUserToDb } = useUserStore();
     const emptyUser = {
-      image: null,
+      image: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -56,7 +47,7 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
     const transformedUser = user
       ? {
           email: user.email || "",
-          image: user.photoURL || null,
+          image: user.photoURL || "",
           firstName: user.firstName || "",
           lastName: user.lastName || "",
           nickname: user.nickname || "",
@@ -71,12 +62,13 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
     });
 
     const handleSubmit = (values: z.infer<typeof profileSchema>) => {
-      console.log("submitted", values);
+      console.log("submitted!!!", values);
       const updatedUser = {
         ...values,
         uid: user?.uid || "",
       };
-      useUserStore.setState({ user: updatedUser });
+      updateUser({ ...updatedUser });
+      saveUserToDb();
     };
 
     React.useImperativeHandle(ref, () => ({
@@ -105,7 +97,10 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
                   <FormControl>
                     <ImageUpload
                       label="Profile picture"
-                      onChange={field.onChange}
+                      onChange={(image: string) => {
+                        field.onChange(image);
+                        updateUser({ photoURL: image });
+                      }}
                       onBlur={field.onBlur}
                     />
                   </FormControl>
