@@ -14,7 +14,7 @@ const BrandedLinks = ({ name, className }: BrandedLinksProps) => {
 
   if (casedName === "Frontend_Mentor") {
     return (
-      <li
+      <div
         className={cn(
           `flex justify-between items-center mb-2 w-full border border-[#D9D9D9] text-grey-dark text-xs bg-white px-4 py-3 rounded-md`,
           className
@@ -27,11 +27,11 @@ const BrandedLinks = ({ name, className }: BrandedLinksProps) => {
         <div>
           <ForwardArrow color="#737373" />
         </div>
-      </li>
+      </div>
     );
   }
   return (
-    <li
+    <div
       className={cn(
         `flex justify-between items-center mb-2 w-full text-xs text-white px-4 py-3 rounded-md`,
         className
@@ -45,7 +45,7 @@ const BrandedLinks = ({ name, className }: BrandedLinksProps) => {
       <div>
         <ForwardArrow color="white" />
       </div>
-    </li>
+    </div>
   );
 };
 
