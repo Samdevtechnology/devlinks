@@ -3,15 +3,19 @@ import Container from "@/components/common/Container";
 import { Button } from "@/components/ui/button";
 import ProfileForm from "@/components/forms/Profile";
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
   const formRef = useRef<{ submit: () => void } | null>(null);
+  const router = useRouter();
 
   const handleFormSubmit = () => {
     if (formRef.current) {
       formRef.current.submit();
     }
+    router.push("/preview");
   };
+
   return (
     <Container className="h-[90%]">
       <div className="bg-white h-fit flex flex-col justify-between items-center pt-6 mt-6 rounded-xl">
