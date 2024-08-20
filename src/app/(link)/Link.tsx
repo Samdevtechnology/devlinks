@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Emptylist from "./components/Emptylist";
 import { toast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import useTabStore from "@/stores/tabStore";
 
 const LinkForm = () => {
   const { links, addLink, removeLink, getAvailableLinkTypes } = useLinkStore();
@@ -15,6 +16,7 @@ const LinkForm = () => {
     links.map((link) => link.id)
   );
   const formRefs = useRef<Record<string, React.RefObject<any>>>({});
+  const { setActiveTab } = useTabStore();
 
   // Initialize refs for existing links
   useEffect(() => {
@@ -70,6 +72,11 @@ const LinkForm = () => {
     return false;
   };
 
+  const handleSubmit = async () => {
+    const allSaved = await handleSave();
+    setActiveTab("profile");
+  };
+
   return (
     <Container className="h-[90%]">
       <div className="bg-white h-fit flex flex-col justify-between items-center pt-6 mt-6 rounded-xl">
@@ -108,7 +115,7 @@ const LinkForm = () => {
           )}
         </div>
         <div className="border-t border-border p-4 w-full">
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleSubmit}>Save</Button>
         </div>
       </div>
     </Container>
