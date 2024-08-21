@@ -9,9 +9,12 @@ import Emptylist from "./components/Emptylist";
 import { toast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import useTabStore from "@/stores/tabStore";
+import useUserStore from "@/stores/userStore";
 
 const LinkForm = () => {
-  const { links, addLink, removeLink, getAvailableLinkTypes } = useLinkStore();
+  const { links, addLink, removeLink, getAvailableLinkTypes, saveLinksToDb } =
+    useLinkStore();
+  const { user } = useUserStore();
   const [formIds, setFormIds] = useState<string[]>(() =>
     links.map((link) => link.id)
   );
@@ -74,6 +77,9 @@ const LinkForm = () => {
 
   const handleSubmit = async () => {
     const allSaved = await handleSave();
+    if (user?.uid) {
+      saveLinksToDb(user.uid);
+    }
     setActiveTab("profile");
   };
 
