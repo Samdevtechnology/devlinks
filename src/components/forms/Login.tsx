@@ -10,6 +10,8 @@ import { auth } from "@/stores/firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
+import useUserStore from "@/stores/userStore";
+import { useLinkStore } from "@/stores/linkStore";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Can’t be empty").email(),
@@ -19,6 +21,8 @@ const loginSchema = z.object({
 const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const { getUserFromDb } = useUserStore();
+  const { getLinksFromDb } = useLinkStore();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -35,6 +39,9 @@ const Login = () => {
         values.email,
         values.password
       );
+      const user = res.user;
+      getUserFromDb(user.uid);
+      getLinksFromDb(user.uid);
       toast({
         title: "Login Successful",
         description: "Welcome to devslinks",
