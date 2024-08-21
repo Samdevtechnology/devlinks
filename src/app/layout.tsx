@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` bg-grey-light ${fontSans.className}`}>
+      <body className={` bg-grey-light ${fontSans.variable}`}>
         <TabsLayout>{children}</TabsLayout>
         <Toaster />
       </body>
