@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation";
 import { auth } from "@/stores/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import useUserStore from "@/stores/userStore";
+import { useLinkStore } from "@/stores/linkStore";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { user, setUser, clearUser } = useUserStore();
+  const { user, setUser, clearUser, getUserFromDb } = useUserStore();
+  const { links, getLinksFromDb } = useLinkStore();
   const [dbUser, loading, error] = useAuthState(auth);
   const router = useRouter();
 
@@ -24,14 +26,27 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
     if (dbUser) {
       if (!user) {
-        const { uid, email, displayName, photoURL } = dbUser;
-        setUser({ uid, email, displayName, photoURL });
+        getUserFromDb(dbUser.uid);
+      }
+      if (!links) {
+        getLinksFromDb(dbUser.uid);
       }
     } else {
       clearUser();
       router.push("/login");
     }
-  }, [dbUser, loading, error, user, setUser, clearUser, router]);
+  }, [
+    dbUser,
+    loading,
+    error,
+    user,
+    setUser,
+    clearUser,
+    router,
+    getUserFromDb,
+    getLinksFromDb,
+    links,
+  ]);
 
   if (loading) {
     return <div>Loading...</div>;
