@@ -3,13 +3,7 @@ import { persist } from "zustand/middleware";
 import { Link } from "@/types/link";
 import { LinkType } from "@/lib/linkTypes";
 import { db } from "./firebase/config"; // Import your Firestore instance
-import {
-  collection,
-  getDocs,
-  doc,
-  setDoc,
-  writeBatch,
-} from "firebase/firestore";
+import { collection, getDocs, doc, writeBatch } from "firebase/firestore";
 
 interface LinkState {
   links: Link[];
@@ -18,8 +12,8 @@ interface LinkState {
   removeLink: (id: string) => void;
   updateLinks: (links: Link[]) => void;
   getAvailableLinkTypes: () => LinkType[];
-  fetchLinksFromFirestore: () => Promise<void>;
-  saveLinksToFirestore: () => Promise<void>;
+  getLinksFromDb: (userId: string) => Promise<void>;
+  saveLinksToDb: (userId: string) => Promise<void>;
 }
 
 export const useLinkStore = create<LinkState>()(
@@ -61,8 +55,8 @@ export const useLinkStore = create<LinkState>()(
         return allLinkTypes.filter((type) => !usedLinkTypes.includes(type));
       },
 
-      fetchLinksFromFirestore: async () => {
-        const linksCollection = collection(db, "links");
+      getLinksFromDb: async (userId: string) => {
+        const linksCollection = collection(db, "users", userId, "links");
         const linksSnapshot = await getDocs(linksCollection);
         const linksData = linksSnapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() } as Link)
@@ -74,13 +68,35 @@ export const useLinkStore = create<LinkState>()(
         });
       },
 
-      saveLinksToFirestore: async () => {
+      saveLinksToDb: async (userId: string) => {
         const links = get().links;
+        const linksCollectionRef = collection(db, "users", userId, "links");
+
+        const existingLinksSnapshot = await getDocs(linksCollectionRef);
+        const existingLinks = existingLinksSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
         const batch = writeBatch(db);
 
+        const existingLinkIds = new Set(existingLinks.map((link) => link.id));
+        const currentLinkIds = new Set(links.map((link) => link.id));
+
+        existingLinksSnapshot.forEach((doc) => {
+          if (!currentLinkIds.has(doc.id)) {
+            batch.delete(doc.ref);
+          }
+        });
+
         links.forEach((link) => {
-          const linkRef = doc(db, "links", link.id);
-          batch.set(linkRef, link);
+          const linkRef = doc(linksCollectionRef, link.id);
+          const linkData = { ...link };
+          if (!existingLinkIds.has(link.id)) {
+            batch.set(linkRef, link);
+          } else {
+            batch.update(linkRef, linkData);
+          }
         });
 
         await batch.commit();
