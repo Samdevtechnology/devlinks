@@ -1,6 +1,5 @@
 import Container from "./Container";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { TabsContent } from "@radix-ui/react-tabs";
+import { TabsList, TabsTrigger } from "../ui/tabs";
 import LogoIcon from "./LogoIcon";
 import { Eye, UserCircle } from "@/lib/phosphorIconServer";
 import { Button } from "../ui/button";
