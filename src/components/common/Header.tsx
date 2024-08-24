@@ -6,6 +6,7 @@ import Logo from "./Logo";
 import Link from "next/link";
 import { Eye, UserCircle, Link as LinkIcon } from "../icons/Icons";
 import ThemeToggleBtn from "./ThemeToggleBtn";
+import ProfileIcon from "./ProfileIcon";
 
 const Header = () => {
   return (
@@ -32,6 +33,7 @@ const Header = () => {
           </TabsTrigger>
         </TabsList>
         <div className="flex gap-2">
+          <ProfileIcon />
           <ThemeToggleBtn />
           <Link href="/preview">
             <Button variant="secondary">
