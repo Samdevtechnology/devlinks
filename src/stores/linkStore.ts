@@ -14,6 +14,7 @@ interface LinkState {
   getAvailableLinkTypes: () => LinkType[];
   getLinksFromDb: (userId: string) => Promise<void>;
   saveLinksToDb: (userId: string) => Promise<void>;
+  clearLinks: () => void;
 }
 
 export const useLinkStore = create<LinkState>()(
@@ -40,6 +41,13 @@ export const useLinkStore = create<LinkState>()(
             ? state.usedLinkTypes.filter((type) => type !== linkToRemove.type)
             : state.usedLinkTypes,
         }));
+      },
+
+      clearLinks: () => {
+        set({
+          links: [],
+          usedLinkTypes: [],
+        });
       },
 
       updateLinks: (links) => {
