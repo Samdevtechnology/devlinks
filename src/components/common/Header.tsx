@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import Logo from "./Logo";
 import Link from "next/link";
 import { Eye, UserCircle, Link as LinkIcon } from "../icons/Icons";
-
+import ThemeToggleBtn from "./ThemeToggleBtn";
 
 const Header = () => {
   return (
@@ -25,7 +25,8 @@ const Header = () => {
             <span className="hidden  sm:flex">Profile Details</span>
           </TabsTrigger>
         </TabsList>
-        <div>
+        <div className="flex gap-2">
+          <ThemeToggleBtn />
           <Link href="/preview">
             <Button variant="secondary">
               <Eye className=" sm:hidden h-5 w-5" />
