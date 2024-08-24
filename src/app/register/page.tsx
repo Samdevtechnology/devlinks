@@ -11,8 +11,10 @@ const Register = () => {
     <Container>
       <div className="w-full h-full sm:min-h-screen flex justify-center items-center my-8">
         <div className="w-full max-w-[30rem]">
-          <div className="flex justify-center items-center mb-12">
-            <Logo />
+          <div className="flex justify-center items-center mb-12 px-10">
+            <Link href="/">
+              <Logo />
+            </Link>
           </div>
 
           <div className="sm:bg-white p-10 rounded-xl">
