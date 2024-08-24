@@ -17,11 +17,17 @@ const Header = () => {
         </Link>
         <TabsList className="flex gap-8 py-0 h-full bg-white">
           <TabsTrigger value="link">
-            <LinkIcon className="sm:mr-2 w-6 h-6 text-inherit" />
+            <LinkIcon
+              className="sm:mr-2 w-6 h-6 text-inherit"
+              color="currentColor"
+            />
             <span className="hidden sm:flex">Link</span>
           </TabsTrigger>
           <TabsTrigger value="profile">
-            <UserCircle className="sm:mr-2 w-6 h-6 text-inherit" />
+            <UserCircle
+              className="sm:mr-2 w-6 h-6 text-inherit"
+              color="currentColor"
+            />
             <span className="hidden  sm:flex">Profile Details</span>
           </TabsTrigger>
         </TabsList>
@@ -29,7 +35,7 @@ const Header = () => {
           <ThemeToggleBtn />
           <Link href="/preview">
             <Button variant="secondary">
-              <Eye className=" sm:hidden h-5 w-5" />
+              <Eye className=" sm:hidden h-5 w-5" color="currentColor" />
               <span className="hidden  sm:flex">Preview</span>
             </Button>
           </Link>
