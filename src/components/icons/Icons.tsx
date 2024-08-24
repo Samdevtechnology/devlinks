@@ -5,6 +5,7 @@ export interface IconProps {
   color?: string;
   colored?: boolean;
   innerColor?: string;
+  className?: string;
 }
 
 const defaultSize = 16;
@@ -32,12 +33,14 @@ export const YouTube = ({
 export const Link = ({
   size = defaultSize,
   color = defaultColor,
+  className,
 }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
+      className={className}
       viewBox="0 0 16 16"
       fill="none"
     >
@@ -390,6 +393,178 @@ export const Codewars = ({
     </svg>
   );
 };
+export const User = ({
+  size = defaultSize,
+  color = defaultColor,
+}: IconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill={defaultColor}
+        fillRule="evenodd"
+        d="M7.75 7.5a4.25 4.25 0 1 1 8.5 0a4.25 4.25 0 0 1-8.5 0M12 4.75a2.75 2.75 0 1 0 0 5.5a2.75 2.75 0 0 0 0-5.5m-4 10A2.25 2.25 0 0 0 5.75 17v1.188c0 .018.013.034.031.037c4.119.672 8.32.672 12.438 0a.04.04 0 0 0 .031-.037V17A2.25 2.25 0 0 0 16 14.75h-.34a.3.3 0 0 0-.079.012l-.865.283a8.75 8.75 0 0 1-5.432 0l-.866-.283a.3.3 0 0 0-.077-.012zM4.25 17A3.75 3.75 0 0 1 8 13.25h.34q.28.001.544.086l.866.283a7.25 7.25 0 0 0 4.5 0l.866-.283c.175-.057.359-.086.543-.086H16A3.75 3.75 0 0 1 19.75 17v1.188c0 .754-.546 1.396-1.29 1.517a40.1 40.1 0 0 1-12.92 0a1.54 1.54 0 0 1-1.29-1.517z"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+};
+export const UserFilled = ({
+  size = defaultSize,
+  color = defaultColor,
+}: IconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill={defaultColor}
+        d="M12 3.75a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5m-4 9.5A3.75 3.75 0 0 0 4.25 17v1.188c0 .754.546 1.396 1.29 1.517c4.278.699 8.642.699 12.92 0a1.54 1.54 0 0 0 1.29-1.517V17A3.75 3.75 0 0 0 16 13.25h-.34q-.28.001-.544.086l-.866.283a7.25 7.25 0 0 1-4.5 0l-.866-.283a1.8 1.8 0 0 0-.543-.086z"
+      ></path>
+    </svg>
+  );
+};
+export const Moon = ({
+  size = defaultSize,
+  color = defaultColor,
+}: IconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="none"
+        stroke={color}
+        strokeDasharray={64}
+        strokeDashoffset={64}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21C15.53 21 18.59 18.96 20.06 16C20.06 16 14 17.5 11 13C8 8.5 12 3 12 3Z"
+      >
+        <animate
+          fill="freeze"
+          attributeName="stroke-dashoffset"
+          dur="0.6s"
+          values="64;0"
+        ></animate>
+      </path>
+    </svg>
+  );
+};
+export const Sun = ({
+  size = defaultSize,
+  color = defaultColor,
+}: IconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+    >
+      <g
+        fill="none"
+        stroke={defaultColor}
+        strokeLinecap="round"
+        strokeWidth={2}
+      >
+        <path
+          strokeDasharray={34}
+          strokeDashoffset={34}
+          d="M12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7"
+        >
+          <animate
+            fill="freeze"
+            attributeName="stroke-dashoffset"
+            dur="0.4s"
+            values="34;0"
+          ></animate>
+        </path>
+        <g strokeDasharray={2} strokeDashoffset={2}>
+          <path d="M0 0">
+            <animate
+              fill="freeze"
+              attributeName="d"
+              begin="0.5s"
+              dur="0.2s"
+              values="M12 19v1M19 12h1M12 5v-1M5 12h-1;M12 21v1M21 12h1M12 3v-1M3 12h-1"
+            ></animate>
+            <animate
+              fill="freeze"
+              attributeName="stroke-dashoffset"
+              begin="0.5s"
+              dur="0.2s"
+              values="2;0"
+            ></animate>
+          </path>
+          <path d="M0 0">
+            <animate
+              fill="freeze"
+              attributeName="d"
+              begin="0.7s"
+              dur="0.2s"
+              values="M17 17l0.5 0.5M17 7l0.5 -0.5M7 7l-0.5 -0.5M7 17l-0.5 0.5;M18.5 18.5l0.5 0.5M18.5 5.5l0.5 -0.5M5.5 5.5l-0.5 -0.5M5.5 18.5l-0.5 0.5"
+            ></animate>
+            <animate
+              fill="freeze"
+              attributeName="stroke-dashoffset"
+              begin="0.7s"
+              dur="0.2s"
+              values="2;0"
+            ></animate>
+          </path>
+        </g>
+      </g>
+    </svg>
+  );
+};
+export const Eye = ({
+  size = defaultSize,
+  color = defaultColor,
+  className,
+}: IconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill={color}
+      viewBox="0 0 256 256"
+      className={className}
+    >
+      <path d="M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.33,133.33,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"></path>
+    </svg>
+  );
+};
+export const UserCircle = ({
+  size = defaultSize,
+  color = defaultColor,
+  className,
+}: IconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill={color}
+      viewBox="0 0 256 256"
+      className={className}
+    >
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
+    </svg>
+  );
+};
 
 const Icons = {
   YouTube,
@@ -408,6 +583,12 @@ const Icons = {
   Codewars,
   Link,
   ForwardArrow,
+  User,
+  UserFilled,
+  Sun,
+  Moon,
+  Eye,
+  UserCircle,
 };
 
 export default Icons;

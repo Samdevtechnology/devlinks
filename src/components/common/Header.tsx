@@ -1,11 +1,11 @@
 import Container from "./Container";
 import { TabsList, TabsTrigger } from "../ui/tabs";
 import LogoIcon from "./LogoIcon";
-import { Eye, UserCircle } from "@/lib/phosphorIconServer";
 import { Button } from "../ui/button";
 import Logo from "./Logo";
 import Link from "next/link";
-import { LinkIcon } from "lucide-react";
+import { Eye, UserCircle, Link as LinkIcon } from "../icons/Icons";
+
 
 const Header = () => {
   return (
