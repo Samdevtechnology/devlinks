@@ -7,13 +7,14 @@ import Link from "next/link";
 import { Eye, UserCircle, Link as LinkIcon } from "../icons/Icons";
 import ThemeToggleBtn from "./ThemeToggleBtn";
 import ProfileIcon from "./ProfileIcon";
+import HamburgerMenu from "./HamburgerMenu";
 
 const Header = () => {
   return (
     <Container className="px-0 sm:px-4">
       <div className="flex justify-between items-center bg-white rounded-xl sm:mt-4 py-2 px-4">
         <Link href="/">
-          <LogoIcon className="sm:hidden" />
+          <HamburgerMenu className="sm:hidden" />
           <Logo className="hidden sm:flex" />
         </Link>
         <TabsList className="flex gap-8 py-0 h-full bg-white">
@@ -33,7 +34,7 @@ const Header = () => {
           </TabsTrigger>
         </TabsList>
         <div className="flex gap-2">
-          <ProfileIcon />
+          <ProfileIcon className="hidden sm:flex" />
           <ThemeToggleBtn />
           <Link href="/preview">
             <Button variant="secondary">

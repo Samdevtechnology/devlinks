@@ -565,6 +565,28 @@ export const UserCircle = ({
     </svg>
   );
 };
+export const Hamburger = ({
+  size = defaultSize,
+  color = defaultColor,
+}: IconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="none"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4 12h16M4 6h16M4 18h16"
+      ></path>
+    </svg>
+  );
+};
 
 const Icons = {
   YouTube,
@@ -589,6 +611,7 @@ const Icons = {
   Moon,
   Eye,
   UserCircle,
+  Hamburger,
 };
 
 export default Icons;
