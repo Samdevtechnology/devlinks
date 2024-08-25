@@ -1,17 +1,20 @@
 import { Button } from "../ui/button";
-import Icons from "../icons/Icons";
-import { useThemeStore } from "@/stores/themeStore";
-import { useEffect } from "react";
+import { Sun, Moon } from "../icons/Icons";
+import { useTheme } from "next-themes";
 
-const ThemeToggleBtn = () => {
-  const { theme, toggleTheme, initializeTheme } = useThemeStore();
+const ThemeToggleBtn = ({ className }: { className?: string }) => {
+  const { setTheme, systemTheme, theme } = useTheme();
 
-  useEffect(() => {
-    initializeTheme();
-  }, [initializeTheme]);
+  const toggleTheme = () => {
+    const effectiveTheme = theme === "system" ? systemTheme : theme;
+    setTheme(effectiveTheme === "dark" ? "light" : "dark");
+  };
+
   return (
-    <Button onClick={toggleTheme} variant="ghost">
-      {theme === "dark" ? <Icons.Sun size={24} /> : <Icons.Moon size={24} />}
+    <Button variant="ghost" onClick={toggleTheme} className={className}>
+      <Sun size={24} className="dark:flex hidden" />
+      <Moon size={24} className="dark:hidden" />
+      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 };

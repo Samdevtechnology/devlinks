@@ -3,6 +3,7 @@ import { Instrument_Sans as FontSans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import TabsLayout from "@/components/common/TabsLayout";
+import ThemeProvider from "@/components/common/ThemeProvider";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -19,7 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` bg-grey-light ${fontSans.variable}`}>
-        <TabsLayout>{children}</TabsLayout>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TabsLayout>{children}</TabsLayout>
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>
