@@ -1,7 +1,7 @@
 import LinkForm from "./components/LinkForm";
 
 const Link = () => {
-  return <LinkForm></LinkForm>;
+  return <LinkForm />;
 };
 
 export default Link;
