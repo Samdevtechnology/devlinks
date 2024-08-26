@@ -11,16 +11,16 @@ const Login = () => {
     <Container>
       <div className="w-full h-full sm:min-h-screen flex justify-center items-center my-8">
         <div className="w-full max-w-[30rem]">
-          <div className="flex justify-center items-center mb-12 px-10">
+          <div className="flex sm:justify-center items-center mb-12 px-3 sm:px-10 ">
             <Link href="/">
               <Logo />
             </Link>
           </div>
 
-          <div className="sm:bg-white p-10 rounded-xl">
+          <div className="sm:bg-white p-3 sm:p-10 rounded-xl">
             <header className="mb-10">
               <h1 className="font-bold text-3xl">Login</h1>
-              <p className="text-grey">
+              <p className="text-grey mt-2">
                 Add your details below to get back into the app
               </p>
             </header>
