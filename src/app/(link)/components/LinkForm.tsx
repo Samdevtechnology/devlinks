@@ -85,7 +85,7 @@ const LinkForm = () => {
 
   return (
     <Container className="h-[90%]">
-      <div className="bg-white h-fit flex flex-col justify-between items-center pt-6 mt-6 rounded-xl">
+      <div className="bg-card h-fit flex flex-col justify-between items-center pt-6 mt-6 rounded-xl">
         <div className="px-6">
           <div className="mb-10">
             <h1 className="font-bold text-2xl">Customize your links</h1>

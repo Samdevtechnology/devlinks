@@ -32,14 +32,14 @@ const UserCard = ({ user, links = [] }: UserCardProps) => {
 
   return (
     <div className="flex flex-col h-full justify-center items-center">
-      <div className="flex flex-col bg-white rounded-3xl justify-center items-center p-6 w-full max-w-80">
+      <div className="flex flex-col bg-card rounded-3xl justify-center items-center p-6 w-full max-w-80">
         <div className="flex flex-col justify-center items-center text-center">
           <Avatar
             className={cn("w-28 h-28", profilePic && "border-4 border-primary")}
           >
             <AvatarImage src={profilePic ?? ""} />
 
-            <AvatarFallback>
+            <AvatarFallback className="bg-transparent">
               <Skeleton width={112} height={112} circle />
             </AvatarFallback>
           </Avatar>

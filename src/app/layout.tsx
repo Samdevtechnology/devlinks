@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` bg-grey-light ${fontSans.variable}`}>
+      <body className={` bg-background text-grey-dark ${fontSans.variable}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

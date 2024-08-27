@@ -17,7 +17,7 @@ const Register = () => {
             </Link>
           </div>
 
-          <div className="sm:bg-white p-3 sm:p-10 rounded-xl">
+          <div className="sm:bg-card p-3 sm:p-10 rounded-xl">
             <header className="mb-10">
               <h1 className="font-bold text-3xl">Create account</h1>
               <p className="text-grey mt-2">
