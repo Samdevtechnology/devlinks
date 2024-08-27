@@ -4,7 +4,6 @@ import Header from "@/components/common/Header";
 import LinkPage from "../(link)/Link";
 import ProfilePage from "../(profile)/Profile";
 import PreviewFrame from "./components/Frame";
-import Preview from "../preview/page";
 
 export default function Home() {
   return (
