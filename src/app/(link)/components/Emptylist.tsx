@@ -1,15 +1,10 @@
-import Image from "next/image";
+import { EmptyList as EmptyListIcon } from "@/components/icons/Icons";
 
 const Emptylist = () => {
   return (
     <div className="bg-grey-light rounded-xl px-5 py-12 flex flex-col justify-center items-center text-center">
       <div>
-        <Image
-          src="/assets/image/upload.png"
-          alt="upload"
-          width={150}
-          height={90}
-        />
+        <EmptyListIcon width={150} height={90} />
       </div>
       <div className="mt-6 sm:mt-10 text-center">
         <h3 className="font-bold text-2xl sm:text-2xl">

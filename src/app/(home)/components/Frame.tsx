@@ -3,11 +3,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useLinkStore } from "@/stores/linkStore";
 import useUserStore from "@/stores/userStore";
-import Image from "next/image";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { MobileFrame } from "@/components/icons/Icons";
 
 const PreviewFrame = () => {
   const { links, updateLinks } = useLinkStore();
@@ -32,16 +32,10 @@ const PreviewFrame = () => {
   };
 
   return (
-    <div className="w-full h-fit bg-white rounded-xl ml-8 lg:ml-12 mt-6 sticky top-0">
+    <div className="w-full h-fit bg-card rounded-xl ml-8 lg:ml-12 mt-6 sticky top-0">
       <div className="w-full flex justify-center items-center py-6 ">
         <div className="relative">
-          <Image
-            src="/assets/image/preview-frame.png"
-            alt="preview frame"
-            priority
-            width={256}
-            height={528}
-          />
+          <MobileFrame width={256} height={528} />
           <div className="absolute inset-0 overflow-hidden m-4 px-4 flex items-start justify-center ">
             <div className="flex flex-col w-full justify-center items-center">
               <div className="flex flex-col justify-center items-center text-center">
@@ -53,7 +47,7 @@ const PreviewFrame = () => {
                 >
                   <AvatarImage src={profilePic ?? ""} />
 
-                  <AvatarFallback>
+                  <AvatarFallback className="bg-transparent">
                     <Skeleton width={96} height={96} circle />
                   </AvatarFallback>
                 </Avatar>
@@ -63,7 +57,7 @@ const PreviewFrame = () => {
                 </h3>
 
                 <p className="text-grey w-full">
-                  {user?.email || <Skeleton height={6} />}
+                  {user?.email || <Skeleton height={8} />}
                 </p>
               </div>
               <div className="link mt-8 max-h-[264px] w-full overflow-y-auto no-scrollbar">
