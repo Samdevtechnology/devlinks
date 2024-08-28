@@ -1,5 +1,3 @@
-// import
-
 export interface IconProps {
   size?: number;
   color?: string;
@@ -72,7 +70,6 @@ export const ForwardArrow = ({
     </svg>
   );
 };
-
 export const Stack_Overflow = ({
   size = defaultSize,
   color = defaultColor,
@@ -104,7 +101,6 @@ export const Stack_Overflow = ({
     </svg>
   );
 };
-
 export const Hashnode = ({
   size = defaultSize,
   color = defaultColor,
@@ -566,11 +562,11 @@ export const MobileFrame = ({
     </svg>
   );
 };
-
 export const EmptyList = ({
   color = "#633cff",
   width = 220,
   height = 151,
+  innerColor,
 }: IconProps) => {
   return (
     <svg
@@ -582,21 +578,21 @@ export const EmptyList = ({
     >
       <path
         d="M141.993 0.0335693H78.0145C74.0013 0.0335693 70.748 3.28688 70.748 7.30004V128.21C70.748 132.224 74.0013 135.477 78.0145 135.477H141.993C146.006 135.477 149.259 132.224 149.259 128.21V7.30004C149.259 3.28688 146.006 0.0335693 141.993 0.0335693Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-300"
       />
       <path
         opacity="0.03"
         d="M110.004 131.339C113.144 131.339 115.691 128.792 115.691 125.651C115.691 122.511 113.144 119.964 110.004 119.964C106.863 119.964 104.316 122.511 104.316 125.651C104.316 128.792 106.863 131.339 110.004 131.339Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         d="M141.598 11.7875H78.4019V117.246H141.598V11.7875Z"
-        fill="#EFEBFF"
+        className={innerColor}
       />
       <path
         opacity="0.03"
         d="M102.767 110.974C103.908 110.974 104.833 110.05 104.833 108.909C104.833 107.768 103.908 106.844 102.767 106.844C101.627 106.844 100.702 107.768 100.702 108.909C100.702 110.05 101.627 110.974 102.767 110.974Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.44"
@@ -606,41 +602,41 @@ export const EmptyList = ({
       <path
         opacity="0.03"
         d="M117.24 110.974C118.38 110.974 119.305 110.05 119.305 108.909C119.305 107.768 118.38 106.844 117.24 106.844C116.099 106.844 115.174 107.768 115.174 108.909C115.174 110.05 116.099 110.974 117.24 110.974Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M133.17 23.4198H86.8374V62.9715H133.17V23.4198Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M119.343 70.595H86.8374V74.2168H119.343V70.595Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M133.17 70.595H121.538V74.2168H133.17V70.595Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M102.023 81.7035H86.8374V85.3253H102.023V81.7035Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M133.17 81.7035H105.25V85.3253H133.17V81.7035Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M121.924 92.8196H86.8374V96.4414H121.924V92.8196Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         d="M63.6259 11.7875H0.429688V117.246H63.6259V11.7875Z"
-        fill="#EFEBFF"
+        className={innerColor}
       />
       <path
         opacity="0.44"
@@ -650,56 +646,56 @@ export const EmptyList = ({
       <path
         opacity="0.03"
         d="M32.0316 110.974C33.1722 110.974 34.0969 110.05 34.0969 108.909C34.0969 107.768 33.1722 106.844 32.0316 106.844C30.891 106.844 29.9663 107.768 29.9663 108.909C29.9663 110.05 30.891 110.974 32.0316 110.974Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M39.2674 110.974C40.4081 110.974 41.3327 110.05 41.3327 108.909C41.3327 107.768 40.4081 106.844 39.2674 106.844C38.1268 106.844 37.2021 107.768 37.2021 108.909C37.2021 110.05 38.1268 110.974 39.2674 110.974Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M55.1975 23.4198H8.86523V62.9715H55.1975V23.4198Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M41.3707 70.595H8.86523V74.2168H41.3707V70.595Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M55.1978 70.595H43.5654V74.2168H55.1978V70.595Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M24.0512 81.7035H8.86523V85.3253H24.0512V81.7035Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M55.1976 81.7035H27.2783V85.3253H55.1976V81.7035Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M43.9523 92.8196H8.86523V96.4414H43.9523V92.8196Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         d="M219.57 11.7875H156.374V117.246H219.57V11.7875Z"
-        fill="#EFEBFF"
+        className={innerColor}
       />
       <path
         opacity="0.03"
         d="M180.74 110.974C181.88 110.974 182.805 110.05 182.805 108.909C182.805 107.768 181.88 106.844 180.74 106.844C179.599 106.844 178.674 107.768 178.674 108.909C178.674 110.05 179.599 110.974 180.74 110.974Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M187.975 110.974C189.116 110.974 190.041 110.05 190.041 108.909C190.041 107.768 189.116 106.844 187.975 106.844C186.835 106.844 185.91 107.768 185.91 108.909C185.91 110.05 186.835 110.974 187.975 110.974Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.44"
@@ -709,37 +705,37 @@ export const EmptyList = ({
       <path
         opacity="0.03"
         d="M211.142 23.4198H164.81V62.9715H211.142V23.4198Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M197.315 70.595H164.81V74.2168H197.315V70.595Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M211.142 70.595H199.509V74.2168H211.142V70.595Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M179.995 81.7035H164.81V85.3253H179.995V81.7035Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M211.15 81.7035H183.23V85.3253H211.15V81.7035Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.03"
         d="M199.897 92.8196H164.81V96.4414H199.897V92.8196Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         opacity="0.1"
         d="M131.568 135.507C131.568 134.748 129.958 103.617 130.991 98.985C132.023 94.3533 141.499 71.7111 139.001 69.0687C136.503 66.4264 127.354 72.44 127.354 72.44C127.354 72.44 129.024 45.1737 125.076 43.2299C121.127 41.2861 119.373 48.9018 119.373 48.9018L117.27 79.4028L106.853 135.363L131.568 135.507Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
       <path
         d="M124.529 103.761C125.858 98.4459 127.855 93.2599 129.13 87.8916C129.973 84.3381 135.425 69.4863 136.951 65.1128C137.422 63.7688 137.824 62.1439 136.913 61.0505C136.606 60.7308 136.223 60.4937 135.799 60.361C135.376 60.2283 134.926 60.2043 134.491 60.2912C133.613 60.4745 132.804 60.8976 132.152 61.5137C130.634 62.8501 127.832 69.4635 125.782 69.4559C123.299 69.4559 124.468 62.6223 124.4 61.3087C124.119 55.6519 124.537 48.4007 122.327 43.0856C120.687 39.1372 116.617 39.6687 115.66 43.936C114.704 48.2032 114.742 66.0847 114.742 66.0847C114.742 66.0847 98.8573 63.3588 96.1466 68.2031C93.4359 73.0474 98.0144 103.822 98.0144 103.822L124.529 103.761Z"
@@ -752,7 +748,7 @@ export const EmptyList = ({
       <path
         opacity="0.1"
         d="M126.465 150.966L126.177 102.06L112.008 98.947L109.472 150.966H126.465Z"
-        fill="#333333"
+        className="fill-gray-700 dark:fill-gray-50"
       />
     </svg>
   );
