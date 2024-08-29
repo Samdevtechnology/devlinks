@@ -8,6 +8,7 @@ import { useLinkStore } from "@/stores/linkStore";
 import useUserStore from "@/stores/userStore";
 import { toast } from "@/components/ui/use-toast";
 import UserCard from "./components/UserCard";
+import ThemeToggleBtn from "@/components/common/ThemeToggleBtn";
 
 const Preview = () => {
   const { links } = useLinkStore();
@@ -30,7 +31,7 @@ const Preview = () => {
     <div>
       <div className="bg-primary w-full h-[40vh] top-0 hidden sm:flex absolute rounded-b-[32px] -z-10"></div>
       <Container className="pt-4 flex flex-col h-screen">
-        <div className="flex justify-between items-center gap-4 sm:bg-card rounded-xl py-2 sm:px-4 ">
+        <div className="flex justify-between items-center gap-4 sm:bg-card rounded-xl py-2 sm:px-4 dark:bg-primary-light">
           <div className="w-full sm:w-fit">
             <Link href="\">
               <Button size="lg" variant="outline">
@@ -38,7 +39,8 @@ const Preview = () => {
               </Button>
             </Link>
           </div>
-          <div className="w-full sm:w-fit">
+          <div className="w-full sm:w-fit flex justify-center items-center gap-2">
+            <ThemeToggleBtn />
             <Button size="lg" onClick={copyToClipboard}>
               Share Link
             </Button>
