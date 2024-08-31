@@ -180,8 +180,9 @@ const SelectItem = React.forwardRef<
       </span>
 
       <SelectPrimitive.ItemText>
-        <div className="flex items-center gap-3">
-          {Icon && <Icon />} {children}
+        <div className="flex items-center gap-3 text-grey dark:text-gray-350">
+          {Icon && <Icon color="currentColor" />}
+          <span className="text-grey-dark ">{children}</span>
         </div>
       </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
