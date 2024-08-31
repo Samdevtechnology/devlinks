@@ -14,8 +14,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="relative">
         {Icon && (
-          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-sm text-destructive">
-            {<Icon />}
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-sm text-grey dark:gray-350">
+            {<Icon color="currentColor" />}
           </span>
         )}
         <input
