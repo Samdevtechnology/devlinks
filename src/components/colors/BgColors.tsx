@@ -7,7 +7,7 @@ const BgColors = {
   freeCodeCamp: "#302267",
   Dev_to: "#333333",
   Facebook: "#2442AC",
-  Codepen: "152A2F",
+  Codepen: "#152A2F",
   GitLab: "#EB4925",
   LinkedIn: "#2D68FF",
   Twitch: "#EE3FC8",
