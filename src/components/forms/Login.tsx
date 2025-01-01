@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import useUserStore from "@/stores/userStore";
 import { useLinkStore } from "@/stores/linkStore";
+import Link from "next/link";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Can’t be empty").email(),
@@ -23,6 +24,7 @@ const Login = () => {
   const { toast } = useToast();
   const { getUserFromDb } = useUserStore();
   const { getLinksFromDb } = useLinkStore();
+  const { updateUser, saveUserToDb } = useUserStore();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -40,13 +42,24 @@ const Login = () => {
         values.password
       );
       const user = res.user;
-      getUserFromDb(user.uid);
-      getLinksFromDb(user.uid);
+
+      const returnPath = sessionStorage.getItem("returnPath");
+      if (returnPath) {
+        updateUser({ uid: user?.uid });
+
+        saveUserToDb();
+
+        sessionStorage.removeItem("returnPath");
+        return router.push(returnPath);
+      }
+
+      await getUserFromDb(user.uid);
+      await getLinksFromDb(user.uid);
       toast({
         title: "Login Successful",
         description: "Welcome to devslinks",
       });
-      router.push("/");
+      router.push("/dashboard");
     } catch (err) {
       console.error(err);
     }
@@ -96,6 +109,9 @@ const Login = () => {
             );
           }}
         />
+        <div className="text-sm font-semibold text-end hover:underline underline-offset-2">
+          <Link href="/forgot-password">Forgot Password?</Link>
+        </div>
         <Button type="submit">Login</Button>
       </form>
     </Form>
