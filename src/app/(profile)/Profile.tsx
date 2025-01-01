@@ -13,12 +13,11 @@ const Profile = () => {
     if (formRef.current) {
       formRef.current.submit();
     }
-    router.push("/preview");
   };
 
   return (
     <Container className="h-[90%]">
-      <div className="bg-card h-fit flex flex-col justify-between items-center pt-6 mt-6 rounded-xl">
+      <div className="bg-card h-fit flex flex-col justify-between items-start pt-6 mt-6 rounded-xl">
         <div className="px-6 mb-10">
           <h1 className="font-bold text-2xl">Profile Details</h1>
           <p className="text-grey">
