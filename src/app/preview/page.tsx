@@ -33,7 +33,7 @@ const Preview = () => {
       <Container className="pt-4 flex flex-col h-screen">
         <div className="flex justify-between items-center gap-4 sm:bg-card rounded-xl py-2 sm:px-4 dark:bg-primary-light">
           <div className="w-full sm:w-fit">
-            <Link href="\">
+            <Link href="\dashboard">
               <Button size="lg" variant="outline">
                 Back to Editor
               </Button>
