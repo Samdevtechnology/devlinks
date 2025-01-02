@@ -18,6 +18,7 @@ import React from "react";
 import { Toggle } from "../ui/toggle";
 import useUserStore from "@/stores/userStore";
 import { ToggleLeft, ToggleRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const profileSchema = z.object({
   image: z.string().url().optional(),
@@ -34,6 +35,7 @@ interface profileFormProps {
 
 const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
   (props, ref) => {
+    const router = useRouter();
     const { user, updateUser, saveUserToDb } = useUserStore();
     const emptyUser = {
       image: "",
@@ -62,13 +64,20 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
     });
 
     const handleSubmit = (values: z.infer<typeof profileSchema>) => {
-      console.log("submitted!!!", values);
       const updatedUser = {
         ...values,
         uid: user?.uid || "",
       };
       updateUser({ ...updatedUser });
+
+      if (!user?.uid) {
+        console.log("User not logged in, redirecting to register page");
+        sessionStorage.setItem("returnPath", "/preview");
+        return router.push("/register");
+      }
+
       saveUserToDb();
+      return router.push("/preview");
     };
 
     React.useImperativeHandle(ref, () => ({
