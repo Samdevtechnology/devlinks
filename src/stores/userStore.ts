@@ -90,7 +90,7 @@ const useUserStore = create<UserStore>()(
                 useNickname: user.useNickname,
                 email: user.email,
                 nickname: user.nickname,
-                photoURL: user.photoURL,
+                photoURL: photoURL ?? user.photoURL,
               },
               { merge: true }
             );
