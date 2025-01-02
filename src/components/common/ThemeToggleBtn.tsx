@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "../ui/button";
 import { Sun, Moon } from "../icons/Icons";
 import { useTheme } from "next-themes";
