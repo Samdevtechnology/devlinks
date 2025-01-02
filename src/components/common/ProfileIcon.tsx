@@ -10,17 +10,20 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/stores/firebase/config";
 import { toast } from "../ui/use-toast";
 import { useLinkStore } from "@/stores/linkStore";
+import useTabStore from "@/stores/tabStore";
 import Link from "next/link";
 
 const ProfileIcon = ({ className }: { className?: string }) => {
   const { user, clearUser } = useUserStore();
   const { clearLinks } = useLinkStore();
+  const { setActiveTab } = useTabStore();
 
   const handleLogOut = async () => {
     try {
       await signOut(auth);
       clearUser();
       clearLinks();
+      setActiveTab("link");
       toast({
         title: "Log Out Successful",
         description: "You have been logged out.",
