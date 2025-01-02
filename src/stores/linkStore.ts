@@ -12,8 +12,8 @@ interface LinkState {
   removeLink: (id: string) => void;
   updateLinks: (links: Link[]) => void;
   getAvailableLinkTypes: () => LinkType[];
-  getLinksFromDb: (userId: string) => Promise<void>;
-  saveLinksToDb: (userId: string) => Promise<void>;
+  getLinksFromDb: (uid: string) => Promise<void>;
+  saveLinksToDb: (uid: string) => Promise<void>;
   clearLinks: () => void;
 }
 
@@ -63,8 +63,8 @@ export const useLinkStore = create<LinkState>()(
         return allLinkTypes.filter((type) => !usedLinkTypes.includes(type));
       },
 
-      getLinksFromDb: async (userId: string) => {
-        const linksCollection = collection(db, "users", userId, "links");
+      getLinksFromDb: async (uid: string) => {
+        const linksCollection = collection(db, "users", uid, "links");
         const linksSnapshot = await getDocs(linksCollection);
         const linksData = linksSnapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() } as Link)
@@ -76,9 +76,9 @@ export const useLinkStore = create<LinkState>()(
         });
       },
 
-      saveLinksToDb: async (userId: string) => {
+      saveLinksToDb: async (uid: string) => {
         const links = get().links;
-        const linksCollectionRef = collection(db, "users", userId, "links");
+        const linksCollectionRef = collection(db, "users", uid, "links");
 
         const existingLinksSnapshot = await getDocs(linksCollectionRef);
         const existingLinks = existingLinksSnapshot.docs.map((doc) => ({
