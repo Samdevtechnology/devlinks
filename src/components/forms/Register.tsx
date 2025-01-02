@@ -7,11 +7,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/stores/firebase/config";
+import { auth, db } from "@/stores/firebase/config";
 import { FirebaseError } from "firebase/app";
-import { ToastAction } from "../ui/toast";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { doc, setDoc } from "firebase/firestore";
 
 const registerSchema = z
   .object({
@@ -49,6 +49,13 @@ const Register = () => {
         values.email,
         values.password
       );
+
+      const user = res.user;
+      const userDocRef = doc(db, "users", user.uid);
+      await setDoc(userDocRef, {
+        email: user.email,
+        createdAt: new Date(),
+      });
 
       toast({
         title: "Registration Successful",
@@ -99,25 +106,31 @@ const Register = () => {
           }}
         />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>Create password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="At least 8 characters"
-                    type="password"
-                    {...field}
-                    errorMsg={form.formState.errors.password?.message}
-                  />
-                </FormControl>
-              </FormItem>
-            );
-          }}
-        />
+        <div>
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>Create password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="At least 8 characters"
+                      type="password"
+                      {...field}
+                      errorMsg={form.formState.errors.password?.message}
+                    />
+                  </FormControl>
+                </FormItem>
+              );
+            }}
+          />
+
+          <p className=" text-xs text-grey">
+            Password must contain at least 8 characters
+          </p>
+        </div>
         <FormField
           control={form.control}
           name="passwordConfirm"
@@ -137,9 +150,6 @@ const Register = () => {
             );
           }}
         />
-        <p className=" text-xs text-grey">
-          Password must contain at least 8 characters
-        </p>
         <Button type="submit">Create new account</Button>
       </form>
     </Form>
