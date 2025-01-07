@@ -1,5 +1,6 @@
 import {
   Body,
+  Button,
   Container,
   Head,
   Heading,
@@ -53,33 +54,37 @@ export default function AWSVerifyEmail({
               <Section>
                 <Text style={subHead}>Quick Start Guide</Text>
 
-                <Text style={codeText}>{verificationCode}</Text>
-                <Text style={validityText}>
-                  (This code is valid for 10 minutes)
-                </Text>
+                <ul>
+                  <li style={li}>
+                    Complete your profile to personalize your experience
+                  </li>
+                  <li style={li}>Explore our features and services</li>
+                  <li style={li}>
+                    Connect with other members of our community
+                  </li>
+                </ul>
+              </Section>
+              <Section style={buttonContainer}>
+                <Button href={baseUrl} style={button}>
+                  Get Started
+                </Button>
               </Section>
             </Section>
             <Hr />
             <Section style={lowerSection}>
               <Text style={cautionText}>
-                Amazon Web Services will never email you and ask you to disclose
-                or verify your password, credit card, or banking account number.
+                If you have any questions or need assistance, our support team
+                is here to help.
               </Text>
             </Section>
           </Section>
           <Text style={footerText}>
-            This message was produced and distributed by Amazon Web Services,
-            Inc., 410 Terry Ave. North, Seattle, WA 98109. © 2022, Amazon Web
-            Services, Inc.. All rights reserved. AWS is a registered trademark
-            of{" "}
-            <Link href="https://amazon.com" target="_blank" style={link}>
-              Amazon.com
+            © 2024 Devlinks. All rights reserved.
+            <br />
+            Developer -{" "}
+            <Link href="https://x.com/samdevtech" target="_blank" style={link}>
+              SamdevTech,
             </Link>
-            , Inc. View our{" "}
-            <Link href="https://amazon.com" target="_blank" style={link}>
-              privacy policy
-            </Link>
-            .
           </Text>
         </Container>
       </Body>
@@ -105,6 +110,12 @@ const h1 = {
   fontSize: "20px",
   fontWeight: "bold",
   marginBottom: "15px",
+};
+
+const li = {
+  marginBottom: "15px",
+  fontFamily:
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
 };
 
 const subHead = {
@@ -152,31 +163,20 @@ const footerText = {
   padding: "0 20px",
 };
 
-const h2 = {
-  ...text,
-  margin: 0,
+const buttonContainer = {
+  margin: "27px auto",
+  width: "auto",
+};
+
+const button = {
+  backgroundColor: "#633CFF",
+  color: "#fff",
+  borderRadius: "8px",
+  padding: "12px 18px",
+  textAlign: "center" as const,
+  fontFamily:
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
   fontWeight: "bold",
-  textAlign: "center" as const,
-};
-
-const codeText = {
-  ...text,
-  fontWeight: "bold",
-  fontSize: "36px",
-  margin: "10px 0",
-  textAlign: "center" as const,
-};
-
-const validityText = {
-  ...text,
-  margin: "0px",
-  textAlign: "center" as const,
-};
-
-const verificationSection = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
 };
 
 const mainText = { ...text, marginBottom: "14px" };
