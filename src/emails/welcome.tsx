@@ -83,7 +83,7 @@ export default function AWSVerifyEmail({
             <br />
             Developer -{" "}
             <Link href="https://x.com/samdevtech" target="_blank" style={link}>
-              SamdevTech,
+              SamdevTech
             </Link>
           </Text>
         </Container>
