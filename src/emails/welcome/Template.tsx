@@ -18,11 +18,6 @@ interface welcomeProps {
   name?: string;
 }
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_VERCEL_URL ||
-  process.env.VERCEL_URL ||
-  "http://localhost:3000";
-
 export const Welcome = ({ name = "Dev" }: welcomeProps) => {
   return (
     <Html>
@@ -31,10 +26,10 @@ export const Welcome = ({ name = "Dev" }: welcomeProps) => {
       <Body style={main}>
         <Section style={imageSection}>
           <Img
-            src={`${baseUrl}/logo-full.svg`}
+            src={`/logo-full.svg`}
             width="175"
             height="45"
-            alt="DevTools Logo"
+            alt="Devlinks Logo"
           />
         </Section>
         <Container style={container}>
@@ -61,7 +56,7 @@ export const Welcome = ({ name = "Dev" }: welcomeProps) => {
                 </ul>
               </Section>
               <Section style={buttonContainer}>
-                <Button href={baseUrl} style={button}>
+                <Button href={"/"} style={button}>
                   Get Started
                 </Button>
               </Section>
