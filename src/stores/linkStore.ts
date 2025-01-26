@@ -3,7 +3,14 @@ import { persist } from "zustand/middleware";
 import { Link } from "@/types/link";
 import { LinkType } from "@/lib/linkTypes";
 import { db } from "./firebase/config"; // Import your Firestore instance
-import { collection, getDocs, doc, writeBatch } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  writeBatch,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 interface LinkState {
   links: Link[];
@@ -65,9 +72,11 @@ export const useLinkStore = create<LinkState>()(
 
       getLinksFromDb: async (uid: string) => {
         const linksCollection = collection(db, "users", uid, "links");
-        const linksSnapshot = await getDocs(linksCollection);
+        const linksSnapshot = await getDocs(
+          query(linksCollection, orderBy("order"))
+        );
         const linksData = linksSnapshot.docs.map(
-          (doc) => ({ id: doc.id, ...doc.data() } as Link)
+          (doc) => ({ id: doc.id, ...doc.data() }) as Link
         );
 
         set({
@@ -97,11 +106,11 @@ export const useLinkStore = create<LinkState>()(
           }
         });
 
-        links.forEach((link) => {
+        links.forEach((link, index) => {
           const linkRef = doc(linksCollectionRef, link.id);
-          const linkData = { ...link };
+          const linkData = { ...link, order: index };
           if (!existingLinkIds.has(link.id)) {
-            batch.set(linkRef, link);
+            batch.set(linkRef, linkData);
           } else {
             batch.update(linkRef, linkData);
           }

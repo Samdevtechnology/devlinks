@@ -1,10 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "@/stores/firebase/config"; // Adjust this path based on your setup
 import UserCard from "@/app/preview/components/UserCard";
 import { Link } from "@/types/link";
+import Container from "@/components/common/Container";
 
 interface User {
   uid: string;
@@ -29,7 +37,6 @@ const ViewPage = ({ params }: ViewPageProps) => {
     const fetchUserData = async () => {
       try {
         const userId = params.userId;
-
         // Fetch user data from Firestore
         const userDoc = await getDoc(doc(db, "users", userId));
         if (userDoc.exists()) {
@@ -39,8 +46,9 @@ const ViewPage = ({ params }: ViewPageProps) => {
         }
 
         // Fetch user's links from Firestore
+        const linksCollection = collection(db, "users", userId, "links");
         const linksSnapshot = await getDocs(
-          collection(db, "users", userId, "links")
+          query(linksCollection, orderBy("order"))
         );
         const userLinks: Link[] = linksSnapshot.docs.map((doc) => {
           const data = doc.data() as Link;
@@ -69,7 +77,9 @@ const ViewPage = ({ params }: ViewPageProps) => {
   return (
     <div>
       {user ? (
-        <UserCard user={user} links={links} />
+        <Container className="pt-4 flex flex-col h-screen">
+          <UserCard user={user} links={links} />
+        </Container>
       ) : (
         <div>User not found</div>
       )}

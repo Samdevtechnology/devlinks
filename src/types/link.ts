@@ -4,4 +4,5 @@ export interface Link {
   id: string;
   type: LinkType;
   url: string;
+  order?: number;
 }
