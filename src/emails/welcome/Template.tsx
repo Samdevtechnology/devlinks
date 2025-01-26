@@ -29,6 +29,7 @@ export const Welcome = ({ name = "Dev" }: welcomeProps) => {
         <Section style={imageSection}>
           <Img
             src={`${baseUrl}/logo-full.png`}
+            style={image}
             width="175"
             height="45"
             alt="Devlinks Logo"
@@ -137,12 +138,10 @@ const text = {
 };
 
 const imageSection = {
-  backgroundColor: "#fff",
-  display: "flex",
   padding: "20px 0",
-  alignItems: "center",
-  justifyContent: "center",
 };
+
+const image = { display: "block" as const, margin: "0 auto" };
 
 const coverSection = { backgroundColor: "#fff" };
 
