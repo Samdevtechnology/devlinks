@@ -34,7 +34,7 @@ export const Welcome = ({ name = "Dev" }: welcomeProps) => {
             src={`${baseUrl}/logo-full.svg`}
             width="175"
             height="45"
-            alt="DevTools Logo"
+            alt="Devlinks Logo"
           />
         </Section>
         <Container style={container}>
