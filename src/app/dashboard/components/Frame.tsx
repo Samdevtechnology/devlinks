@@ -31,6 +31,18 @@ const PreviewFrame = () => {
     updateLinks(items);
   };
 
+  const truncate = (text?: string, maxLength: number = 20) => {
+    if (!text) return "";
+
+    const safeText = String(text).trim();
+
+    return safeText.length > maxLength
+      ? safeText.slice(0, maxLength) + "..."
+      : safeText;
+  };
+
+  const email = truncate(user?.displayMail || "");
+
   return (
     <div className="w-full h-fit bg-card rounded-xl ml-8 lg:ml-12 mt-6 sticky top-0">
       <div className="w-full flex justify-center items-center py-6 ">
@@ -57,7 +69,7 @@ const PreviewFrame = () => {
                 </h3>
 
                 <p className="text-grey w-full">
-                  {user?.email || <Skeleton height={8} />}
+                  {email || <Skeleton height={8} />}
                 </p>
               </div>
               <div className="link mt-8 max-h-[264px] w-full overflow-y-auto no-scrollbar">
