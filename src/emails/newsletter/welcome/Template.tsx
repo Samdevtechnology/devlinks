@@ -17,11 +17,6 @@ interface welcomeProps {
   name: string;
 }
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_VERCEL_URL ||
-  process.env.VERCEL_URL ||
-  "http://localhost:3000";
-
 const Welcome = ({ name = "Dev" }: welcomeProps) => {
   return (
     <Html>
@@ -30,7 +25,7 @@ const Welcome = ({ name = "Dev" }: welcomeProps) => {
       <Body style={main}>
         <Section style={imageSection}>
           <Img
-            src={`${baseUrl}/logo-full.svg`}
+            src={`/logo-full.svg`}
             width="175"
             height="45"
             alt="Devlinks Logo"
