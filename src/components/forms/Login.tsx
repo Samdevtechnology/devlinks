@@ -23,7 +23,7 @@ const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
   const { getUserFromDb } = useUserStore();
-  const { getLinksFromDb } = useLinkStore();
+  const { getLinksFromDb, saveLinksToDb } = useLinkStore();
   const { updateUser, saveUserToDb } = useUserStore();
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -45,9 +45,10 @@ const Login = () => {
 
       const returnPath = sessionStorage.getItem("returnPath");
       if (returnPath) {
-        updateUser({ uid: user?.uid });
+        updateUser({ uid: user?.uid, email: user?.email });
 
         saveUserToDb();
+        saveLinksToDb(user.uid);
 
         sessionStorage.removeItem("returnPath");
         return router.push(returnPath);
