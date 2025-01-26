@@ -8,7 +8,7 @@ import { Link as LinkType } from "@/types/link";
 
 interface User {
   uid: string;
-  displayMail: string | null;
+  displayMail?: string | null;
   nickname?: string | null;
   firstName?: string | null;
   lastName?: string | null;
