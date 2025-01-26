@@ -28,7 +28,7 @@ const VerifyOTP = ({ otp = "****", name = "Dev" }: verifyOTPProps) => {
       <Body style={main}>
         <Section style={imageSection}>
           <Img
-            src={`${baseUrl}/logo-full.svg`}
+            src={`${baseUrl}/logo-full.png`}
             width="175"
             height="45"
             alt="Devlinks Logo"
