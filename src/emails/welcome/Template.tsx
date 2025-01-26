@@ -31,7 +31,7 @@ export const Welcome = ({ name = "Dev" }: welcomeProps) => {
       <Body style={main}>
         <Section style={imageSection}>
           <Img
-            src={`${baseUrl}/logo-text.svg`}
+            src={`${baseUrl}/logo-full.svg`}
             width="175"
             height="45"
             alt="DevTools Logo"
