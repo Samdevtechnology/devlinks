@@ -12,6 +12,7 @@ import { FirebaseError } from "firebase/app";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
+import { sendWelcomeEmail } from "@/emails/welcome";
 
 const registerSchema = z
   .object({
@@ -62,6 +63,11 @@ const Register = () => {
         description: "You've been successfully registered",
       });
       router.push("/login");
+
+      const formData = new FormData();
+      formData.append("email", values.email);
+
+      sendWelcomeEmail(formData);
     } catch (err) {
       if (err instanceof FirebaseError) {
         const errMsg = err.code;

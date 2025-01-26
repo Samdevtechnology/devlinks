@@ -14,20 +14,16 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-interface AWSVerifyEmailProps {
-  verificationCode?: string;
+interface welcomeProps {
+  name?: string;
 }
 
-console.log("🚀 ~ baseUrl:", process.env.VERCEL_URL);
+const baseUrl =
+  process.env.NEXT_PUBLIC_VERCEL_URL ||
+  process.env.VERCEL_URL ||
+  "http://localhost:3000";
 
-// const baseUrl = process.env.VERCEL_URL
-//   ? `https://${process.env.VERCEL_URL}`
-//   : "";
-const baseUrl = "http://localhost:3000";
-
-export default function AWSVerifyEmail({
-  verificationCode = "596853",
-}: AWSVerifyEmailProps) {
+export const Welcome = ({ name = "Dev" }: welcomeProps) => {
   return (
     <Html>
       <Head />
@@ -45,7 +41,7 @@ export default function AWSVerifyEmail({
           <Section style={coverSection}>
             <Section style={upperSection}>
               <Heading style={h1}>Welcome to Devlinks 👋</Heading>
-              <Text style={mainText}>Hi Love (First Name),</Text>
+              <Text style={mainText}>Hi {name},</Text>
               <Text style={mainText}>
                 Thank you for joining us! We&apos;re excited to have you as part
                 of our community. Your account has been successfully created and
@@ -83,14 +79,14 @@ export default function AWSVerifyEmail({
             <br />
             Developer -{" "}
             <Link href="https://x.com/samdevtech" target="_blank" style={link}>
-              SamdevTech,
+              SamdevTech
             </Link>
           </Text>
         </Container>
       </Body>
     </Html>
   );
-}
+};
 
 const main = {
   backgroundColor: "#fff",
@@ -182,3 +178,5 @@ const button = {
 const mainText = { ...text, marginBottom: "14px" };
 
 const cautionText = { ...text, margin: "0px" };
+
+export default Welcome;
