@@ -9,6 +9,8 @@ interface SendOTPEmailProps {
   name?: string;
 }
 
+const domain = process.env.RESEND_EMAIL_DOMAIN || "";
+
 export async function sendOTPEmail({
   otp = "****",
   email,
@@ -16,7 +18,7 @@ export async function sendOTPEmail({
 }: SendOTPEmailProps) {
   try {
     const data = await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: domain,
       to: email,
       subject: "Password Reset Security Code",
       react: Email({ name, otp }),

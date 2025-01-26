@@ -7,9 +7,10 @@ export async function sendWelcomeEmail(formData: FormData) {
   const email = formData.get("email") as string;
   const name = (formData.get("name") as string) || "Dev";
 
+  const domain = process.env.RESEND_EMAIL_DOMAIN || "";
   try {
     const data = await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: domain,
       to: email,
       subject: "Welcome to Devlinks!",
       react: Email({ name }),
@@ -20,3 +21,7 @@ export async function sendWelcomeEmail(formData: FormData) {
     return { success: false, error };
   }
 }
+console.log(
+  "🚀 ~ sendWelcomeEmail ~ process.env.RESEND_EMAIL_DOMAIN:",
+  process.env.RESEND_EMAIL_DOMAIN
+);
