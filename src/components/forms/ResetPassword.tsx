@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { useState } from "react";
@@ -28,7 +28,6 @@ const resetPasswordSchema = z
 
 const ResetPassword = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { toast } = useToast();
   const [msg, setMsg] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -46,7 +45,7 @@ const ResetPassword = () => {
   }: z.infer<typeof resetPasswordSchema>) => {
     try {
       const email = sessionStorage.getItem("reset_email") || "";
-      const token = searchParams.get("token") || "";
+      const token = sessionStorage.getItem("token");
 
       if (!email) {
         toast({
@@ -80,6 +79,8 @@ const ResetPassword = () => {
           description: response.message,
         });
         router.push("/login");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("reset_email");
       } else {
         setMsg(response.message);
       }

@@ -79,7 +79,9 @@ const VerifyOTP = () => {
         toast({
           description: response.message,
         });
-        router.push(`/reset-password?token=${response.resetToken}`);
+        const token = response.resetToken || "";
+        sessionStorage.setItem("token", token);
+        router.push(`/reset-password`);
       } else {
         setMsg(response.message);
       }
