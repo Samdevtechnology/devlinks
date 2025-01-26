@@ -8,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 interface User {
   uid: string;
   email: string | null;
+  displayMail?: string | null;
   nickname?: string | null;
   firstName?: string | null;
   lastName?: string | null;
@@ -49,6 +50,11 @@ const useUserStore = create<UserStore>()(
           user: {
             uid: updatedUser.uid ?? state.user?.uid ?? "", // Ensure uid is always a string
             email: updatedUser.email ?? state.user?.email ?? null,
+            displayMail:
+              updatedUser.displayMail ??
+              state.user?.displayMail ??
+              updatedUser.email ??
+              null,
             nickname: updatedUser.nickname ?? state.user?.nickname ?? null,
             firstName: updatedUser.firstName ?? state.user?.firstName ?? null,
             lastName: updatedUser.lastName ?? state.user?.lastName ?? null,
@@ -89,6 +95,7 @@ const useUserStore = create<UserStore>()(
                 lastName: user.lastName,
                 useNickname: user.useNickname,
                 email: user.email,
+                displayMail: user.displayMail,
                 nickname: user.nickname,
                 photoURL: photoURL ?? user.photoURL,
               },
@@ -110,6 +117,7 @@ const useUserStore = create<UserStore>()(
             user: {
               uid,
               email: auth.currentUser?.email ?? userData.email,
+              displayMail: userData.displayMail ?? auth.currentUser?.email,
               nickname: auth.currentUser?.displayName ?? userData.nickname,
               photoURL: auth.currentUser?.photoURL ?? userData.photoURL,
               firstName: userData.firstName,

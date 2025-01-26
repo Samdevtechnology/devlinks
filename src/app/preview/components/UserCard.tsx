@@ -8,7 +8,7 @@ import { Link as LinkType } from "@/types/link";
 
 interface User {
   uid: string;
-  email: string | null;
+  displayMail: string | null;
   nickname?: string | null;
   firstName?: string | null;
   lastName?: string | null;
@@ -49,7 +49,7 @@ const UserCard = ({ user, links = [] }: UserCardProps) => {
           </h3>
 
           <p className="text-grey w-full">
-            {user?.email || <Skeleton height={6} />}
+            {user?.displayMail || <Skeleton height={6} />}
           </p>
         </div>
         <div className="link mt-4 max-h-40 w-full overflow-y-auto no-scrollbar">

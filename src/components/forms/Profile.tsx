@@ -25,7 +25,7 @@ const profileSchema = z.object({
   firstName: z.string().min(1, "Can’t be empty").optional(),
   lastName: z.string().min(1, "Can’t be empty").optional(),
   nickname: z.string().optional(),
-  email: z.string().min(1, "Can’t be empty").email(),
+  displayMail: z.string().min(1, "Can’t be empty").email(),
   useNickname: z.boolean().default(false),
 });
 
@@ -41,14 +41,15 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
       image: "",
       firstName: "",
       lastName: "",
-      email: "",
+      displayMail: "",
       nickname: "",
       useNickname: false,
     };
+    console.log("user", user);
 
     const transformedUser = user
       ? {
-          email: user.email || "",
+          displayMail: user.displayMail || "",
           image: user.photoURL || "",
           firstName: user.firstName || "",
           lastName: user.lastName || "",
@@ -227,7 +228,7 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
 
             <FormField
               control={form.control}
-              name="email"
+              name="displayMail"
               render={({ field }) => {
                 return (
                   <FormItem>
@@ -237,10 +238,10 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
                         placeholder="ben@example.com"
                         type="email"
                         {...field}
-                        errorMsg={form.formState.errors.email?.message}
+                        errorMsg={form.formState.errors.displayMail?.message}
                         onChange={(e) => {
                           field.onChange(e);
-                          updateUser({ email: e.target.value });
+                          updateUser({ displayMail: e.target.value });
                         }}
                       />
                     </FormControl>
