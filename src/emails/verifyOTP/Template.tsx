@@ -13,8 +13,9 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-interface AWSVerifyEmailProps {
-  verificationCode?: string;
+interface verifyOTPProps {
+  otp: string;
+  name: string;
 }
 
 // const baseUrl = process.env.VERCEL_URL
@@ -22,9 +23,7 @@ interface AWSVerifyEmailProps {
 //   : "";
 const baseUrl = "http://localhost:3000";
 
-export default function AWSVerifyEmail({
-  verificationCode = "596853",
-}: AWSVerifyEmailProps) {
+const VerifyOTP = ({ otp = "****", name = "Dev" }: verifyOTPProps) => {
   return (
     <Html>
       <Head />
@@ -42,13 +41,13 @@ export default function AWSVerifyEmail({
           <Section style={coverSection}>
             <Section style={upperSection}>
               <Heading style={h1}>Password Reset Security Code</Heading>
-              <Text style={mainText}>Hi Love (First Name),</Text>
+              <Text style={mainText}>Hi {name},</Text>
               <Text style={mainText}>
                 We received a request to reset your password. Use the
                 verification code below to continue.
               </Text>
               <Section style={codeContainer}>
-                <Heading style={codeStyle}>564873</Heading>
+                <Heading style={codeStyle}>{otp}</Heading>
               </Section>
               <Text style={mainText}>
                 This security code will be valid for 10 minutes. If you
@@ -76,7 +75,7 @@ export default function AWSVerifyEmail({
       </Body>
     </Html>
   );
-}
+};
 
 const main = {
   backgroundColor: "#fff",
@@ -163,3 +162,5 @@ const codeStyle = {
 const mainText = { ...text, marginBottom: "14px" };
 
 const cautionText = { ...text, margin: "0px" };
+
+export default VerifyOTP;

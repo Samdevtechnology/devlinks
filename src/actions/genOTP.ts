@@ -1,6 +1,7 @@
 "use server";
 import { getAdminDb } from "@/stores/firebase/adminConfig";
 import generateOTP from "@/lib/generateOTP";
+import { sendOTPEmail } from "@/emails/verifyOTP";
 
 const genOTP = async (formData: FormData) => {
   try {
@@ -38,6 +39,8 @@ const genOTP = async (formData: FormData) => {
     const otp = generateOTP();
     console.log("🚀 ~ genOTP ~ otp:", otp);
     const otpExpiration = new Date().getTime() + 10 * 60 * 1000;
+
+    sendOTPEmail({ otp, email });
 
     await adminDb.collection("passwordResets").doc(email).set({
       otp,
