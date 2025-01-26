@@ -14,6 +14,7 @@ import {
 } from "../ui/form";
 import { useState } from "react";
 import { Mail } from "../icons/Icons";
+import { sendNewsletterWelcomeEmail } from "@/emails/newsletter/welcome";
 
 const newsletterSchema = z.object({
   email: z.string().min(1, "Email can’t be empty").email(),
@@ -35,6 +36,10 @@ const Newsletter = () => {
       // const res = await addUserToEmailList(
 
       // );
+      const formData = new FormData();
+      formData.append("email", email);
+
+      sendNewsletterWelcomeEmail(formData);
       setSubscribed(true);
     } catch (err) {
       console.error(err);
