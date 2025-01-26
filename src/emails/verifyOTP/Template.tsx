@@ -18,6 +18,8 @@ interface verifyOTPProps {
   name: string;
 }
 
+const baseUrl = process.env.VERCEL_URL || "http://localhost:3000";
+
 const VerifyOTP = ({ otp = "****", name = "Dev" }: verifyOTPProps) => {
   return (
     <Html>
@@ -26,7 +28,7 @@ const VerifyOTP = ({ otp = "****", name = "Dev" }: verifyOTPProps) => {
       <Body style={main}>
         <Section style={imageSection}>
           <Img
-            src={`/logo-full.svg`}
+            src={`${baseUrl}/logo-full.svg`}
             width="175"
             height="45"
             alt="Devlinks Logo"
