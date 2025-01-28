@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useQRCodeStore } from "@/stores/qrCodeStore";
 import { ChevronDown, Download } from "lucide-react";
-import { Span } from "next/dist/trace";
 
 interface SplitBtnProps {
   copyFunc: () => void;
@@ -23,8 +22,7 @@ const SplitBtn = ({ copyFunc, qrFunc, isFlipped }: SplitBtnProps) => {
   return (
     <div className="flex items-center">
       <Button
-        size="lg"
-        className={`rounded-r-none ${isFlipped && "px-6"}`}
+        className={`rounded-r-none h-9 px-3 sm:h-11 sm:px-8 ${isFlipped && "px-6"}`}
         onClick={isFlipped ? downloadQRCode : copyFunc}
       >
         {isFlipped ? (
@@ -37,7 +35,7 @@ const SplitBtn = ({ copyFunc, qrFunc, isFlipped }: SplitBtnProps) => {
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="lg" className={"rounded-l-none border-l px-2"}>
+          <Button className={"rounded-l-none border-l h-9 px-2 sm:h-11"}>
             <ChevronDown className="w-4 h-4" />
           </Button>
         </DropdownMenuTrigger>

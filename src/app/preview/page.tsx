@@ -46,7 +46,7 @@ const Preview = () => {
         <div className="flex justify-between items-center gap-4 sm:bg-card rounded-xl py-2 sm:px-4 dark:bg-primary-light">
           <div className="w-full sm:w-fit">
             <Link href="/dashboard">
-              <Button size="lg" variant="outline">
+              <Button className="h-9 px-3 sm:h-11 sm:px-8" variant="outline">
                 Back to Editor
               </Button>
             </Link>
