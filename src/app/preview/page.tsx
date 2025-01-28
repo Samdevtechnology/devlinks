@@ -15,6 +15,7 @@ const Preview = () => {
   const { links } = useLinkStore();
   const { user } = useUserStore();
   const [url, setUrl] = useState("");
+  const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -34,8 +35,6 @@ const Preview = () => {
     }
   };
 
-  const [isFlipped, setIsFlipped] = useState(false);
-
   const handleFlip = () => {
     setIsFlipped((prev) => !prev);
   };
@@ -46,7 +45,7 @@ const Preview = () => {
       <Container className="pt-4 flex flex-col h-screen">
         <div className="flex justify-between items-center gap-4 sm:bg-card rounded-xl py-2 sm:px-4 dark:bg-primary-light">
           <div className="w-full sm:w-fit">
-            <Link href="\dashboard">
+            <Link href="/dashboard">
               <Button size="lg" variant="outline">
                 Back to Editor
               </Button>
