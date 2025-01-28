@@ -12,10 +12,10 @@ const Header = () => {
   return (
     <Container className="px-0 sm:px-4">
       <div className="flex justify-between items-center bg-card rounded-xl sm:mt-4 py-2 px-4">
-        <Link href="/">
-          <HamburgerMenu className="sm:hidden" />
-          <Logo className="hidden sm:flex" />
+        <Link href="/" className="hidden sm:flex">
+          <Logo />
         </Link>
+        <HamburgerMenu className="sm:hidden" />
         <TabsList className="flex gap-8 py-0 h-full bg-transparent">
           <TabsTrigger value="link">
             <LinkIcon
