@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/input-otp";
 import genOTP from "@/actions/genOTP";
 import verifyOTP from "@/actions/verifyOTP";
+import LoadingDots from "../common/LoadingDots";
 
 const verifyOTPSchema = z.object({
   otp: z.string().min(4, {
@@ -175,8 +176,8 @@ const VerifyOTP = () => {
               </Button>
             )}
           </div>
-          <Button className="mt-6 text-base" type="submit">
-            {isLoading ? "Verifying..." : "Verify OTP"}
+          <Button className="mt-6 text-base" type="submit" disabled={isLoading}>
+            {isLoading ? <LoadingDots /> : "Verify OTP"}
           </Button>
         </form>
       </Form>

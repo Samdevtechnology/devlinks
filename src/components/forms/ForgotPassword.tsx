@@ -10,6 +10,7 @@ import { useToast } from "../ui/use-toast";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { useState } from "react";
 import genOTP from "@/actions/genOTP";
+import LoadingDots from "../common/LoadingDots";
 
 const forgotPasswordSchema = z.object({
   email: z.string().min(1, "Email can’t be empty").email(),
@@ -31,8 +32,10 @@ const ForgotPassword = () => {
   const handleSubmit = async ({
     email,
   }: z.infer<typeof forgotPasswordSchema>) => {
+    if (isLoading) return;
+
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       setMsg("");
 
       const formData = new FormData();
@@ -85,7 +88,7 @@ const ForgotPassword = () => {
             }}
           />
           <Button className="mt-8 text-base" disabled={isLoading} type="submit">
-            {isLoading ? "Sending OTP..." : "Request OTP"}
+            {isLoading ? <LoadingDots /> : "Request OTP"}
           </Button>
         </form>
       </Form>

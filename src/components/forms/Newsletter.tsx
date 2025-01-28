@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 import { Mail } from "../icons/Icons";
 import { sendNewsletterWelcomeEmail } from "@/emails/newsletter/welcome";
+import LoadingDots from "../common/LoadingDots";
 
 const newsletterSchema = z.object({
   email: z.string().min(1, "Email can’t be empty").email(),
@@ -22,6 +23,7 @@ const newsletterSchema = z.object({
 
 const Newsletter = () => {
   const [subscribed, setSubscribed] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof newsletterSchema>>({
     resolver: zodResolver(newsletterSchema),
@@ -31,11 +33,10 @@ const Newsletter = () => {
   });
 
   const handleSubmit = async ({ email }: z.infer<typeof newsletterSchema>) => {
-    try {
-      console.log(email);
-      // const res = await addUserToEmailList(
+    if (isLoading) return;
 
-      // );
+    setIsLoading(true);
+    try {
       const formData = new FormData();
       formData.append("email", email);
 
@@ -43,6 +44,8 @@ const Newsletter = () => {
       setSubscribed(true);
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,8 +85,9 @@ const Newsletter = () => {
               size="sm"
               type="submit"
               className="bg-primary w-fit absolute transform -translate-y-1/2 top-1/2 right-2"
+              disabled={isLoading}
             >
-              Subscribe
+              {isLoading ? <LoadingDots /> : "Subscribe"}
             </Button>
           </form>
         </Form>

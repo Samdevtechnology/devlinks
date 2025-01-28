@@ -10,6 +10,7 @@ import { useToast } from "../ui/use-toast";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { useState } from "react";
 import resetPassword from "@/actions/resetPassword";
+import LoadingDots from "../common/LoadingDots";
 
 const resetPasswordSchema = z
   .object({
@@ -144,8 +145,8 @@ const ResetPassword = () => {
               );
             }}
           />
-          <Button className="mt-8 text-base" type="submit">
-            Set Password
+          <Button className="mt-8 text-base" type="submit" disabled={isLoading}>
+            {isLoading ? <LoadingDots /> : "Set Password"}
           </Button>
         </form>
       </Form>

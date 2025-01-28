@@ -13,6 +13,8 @@ import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
 import { sendWelcomeEmail } from "@/emails/welcome";
+import { useState } from "react";
+import LoadingDots from "../common/LoadingDots";
 
 const registerSchema = z
   .object({
@@ -33,6 +35,7 @@ const registerSchema = z
 const Register = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -44,6 +47,9 @@ const Register = () => {
   });
 
   const handleSubmit = async (values: z.infer<typeof registerSchema>) => {
+    if (isLoading) return;
+
+    setIsLoading(true);
     try {
       const res = await createUserWithEmailAndPassword(
         auth,
@@ -83,6 +89,8 @@ const Register = () => {
           description: "Something went wrong with authentication",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -156,7 +164,9 @@ const Register = () => {
             );
           }}
         />
-        <Button type="submit">Create new account</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <LoadingDots /> : "Create new account"}
+        </Button>
       </form>
     </Form>
   );

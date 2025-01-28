@@ -14,11 +14,12 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import ImageUpload from "../ui/imageUpload";
-import React from "react";
+import React, { useState } from "react";
 import { Toggle } from "../ui/toggle";
 import useUserStore from "@/stores/userStore";
 import { ToggleLeft, ToggleRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import LoadingDots from "../common/LoadingDots";
 
 const profileSchema = z.object({
   image: z.string().url().optional(),
@@ -37,6 +38,8 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
   (props, ref) => {
     const router = useRouter();
     const { user, updateUser, saveUserToDb } = useUserStore();
+    const [isLoading, setIsLoading] = useState(false);
+
     const emptyUser = {
       image: "",
       firstName: "",
@@ -45,7 +48,6 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
       nickname: "",
       useNickname: false,
     };
-    console.log("user", user);
 
     const transformedUser = user
       ? {
@@ -65,20 +67,29 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
     });
 
     const handleSubmit = (values: z.infer<typeof profileSchema>) => {
-      const updatedUser = {
-        ...values,
-        uid: user?.uid || "",
-      };
-      updateUser({ ...updatedUser });
+      if (isLoading) return;
 
-      if (!user?.uid) {
-        console.log("User not logged in, redirecting to register page");
-        sessionStorage.setItem("returnPath", "/preview");
-        return router.push("/register");
+      setIsLoading(true);
+      try {
+        const updatedUser = {
+          ...values,
+          uid: user?.uid || "",
+        };
+        updateUser({ ...updatedUser });
+
+        if (!user?.uid) {
+          console.log("User not logged in, redirecting to register page");
+          sessionStorage.setItem("returnPath", "/preview");
+          return router.push("/register");
+        }
+
+        saveUserToDb();
+        return router.push("/preview");
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
       }
-
-      saveUserToDb();
-      return router.push("/preview");
     };
 
     React.useImperativeHandle(ref, () => ({
@@ -250,8 +261,8 @@ const Profile = React.forwardRef<{ submit: () => void }, profileFormProps>(
               }}
             />
           </div>
-          <Button type="submit" className="hidden">
-            Save
+          <Button type="submit" disabled={isLoading} className="hidden">
+            {isLoading ? <LoadingDots /> : "Save"}
           </Button>
         </form>
       </Form>

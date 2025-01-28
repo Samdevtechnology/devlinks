@@ -13,6 +13,8 @@ import { useToast } from "../ui/use-toast";
 import useUserStore from "@/stores/userStore";
 import { useLinkStore } from "@/stores/linkStore";
 import Link from "next/link";
+import { useState } from "react";
+import LoadingDots from "../common/LoadingDots";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Can’t be empty").email(),
@@ -25,6 +27,7 @@ const Login = () => {
   const { getUserFromDb } = useUserStore();
   const { getLinksFromDb, saveLinksToDb } = useLinkStore();
   const { updateUser, saveUserToDb } = useUserStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -35,6 +38,9 @@ const Login = () => {
   });
 
   const handleSubmit = async (values: z.infer<typeof loginSchema>) => {
+    if (isLoading) return;
+
+    setIsLoading(true);
     try {
       const res = await signInWithEmailAndPassword(
         auth,
@@ -63,6 +69,13 @@ const Login = () => {
       router.push("/dashboard");
     } catch (err) {
       console.error(err);
+      toast({
+        variant: "destructive",
+        title: "Login Failed",
+        description: "Please check your credentials and try again",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -113,7 +126,9 @@ const Login = () => {
         <div className="text-sm font-semibold text-end hover:underline underline-offset-2">
           <Link href="/forgot-password">Forgot Password?</Link>
         </div>
-        <Button type="submit">Login</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <LoadingDots /> : "Login"}
+        </Button>
       </form>
     </Form>
   );
